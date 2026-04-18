@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* MODO DIA */
+:root,
+[data-app-mode="dia"] {
+  --bg-app: #f8f7f7;
+  --bg-side: #eeeded;
+  --text-app: #111111;
+  --primary-color: #ec4166;
+}
+
+/* MODO NOCHE - AQUÍ ESTÁN TUS COLORES EXACTOS */
+[data-app-mode="noche"] {
+  --bg-app: #111;
+  --bg-side: #0d0d0d;
+  --text-app: #f8f7f7;
+  --primary-color: #ec4166;
+}
+
+/* Aplicamos los colores globalmente */
+body {
+  background-color: var(--bg-app);
+  color: var(--text-app);
+  transition: background-color 0.3s ease;
+}
+
+@layer components {
+  .colorPrimary {
+    color: var(--primary-color);
+  }
+  .bgWhite {
+    background-color: var(--bg-app);
+  }
+  .bgGrey {
+    background-color: var(--bg-side);
+  }
+}
