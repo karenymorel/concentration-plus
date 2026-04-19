@@ -5,7 +5,7 @@ import ThemeToggle from "./components/ThemeToggle";
 import { useConfigStore } from "./store/useConfigStore";
 import Calendario from "./components/Calendario";
 import Configuracion from "./components/Configuracion";
-import Historial from "./components/Historial";
+import Historial from "./components/Historial"; // Me aseguro de importarlo
 import { Toaster } from "sonner";
 
 function App() {
@@ -13,9 +13,11 @@ function App() {
   const pantallaActual = useConfigStore((state) => state.pantallaActual);
 
   return (
-    <main className="flex flex-col md:flex-row h-screen w-full text-custom-text bg-custom-bg overflow-hidden transition-colors duration-300">
+    // 🛠️ CAMBIO 1: min-h-[100dvh] en lugar de h-screen para que en móvil se pueda scrollear si no cabe.
+    // 🛠️ CAMBIO 2: flex-col-reverse pone el reloj ARRIBA y el menú ABAJO en celulares.
+    <main className="flex flex-col-reverse md:flex-row min-h-[100dvh] md:h-screen w-full text-custom-text bg-custom-bg transition-colors duration-300">
       {/* SIDEBAR */}
-      <section className="w-full md:w-2/6 z-10 bg-custom-sidebar border-r border-white/5 h-full flex-shrink-0">
+      <section className="w-full md:w-80 h-auto md:h-full z-10 bg-custom-sidebar border-t md:border-t-0 md:border-r border-white/5 flex-shrink-0">
         <Sidebar />
       </section>
 
@@ -25,15 +27,10 @@ function App() {
           <ThemeToggle />
         </div>
 
-        <div className="flex-1 overflow-y-auto w-full h-full relative">
-          {/* 
-            EL TRUCO DE LA FASE 1: 
-            En vez de usar &&, usamos CSS. Si no es la pantalla actual, le ponemos "hidden".
-            Así, el Timer sigue corriendo de fondo aunque no lo veas.
-          */}
-
+        {/* 🛠️ CAMBIO 3: overflow-visible en móvil, overflow-y-auto en PC */}
+        <div className="flex-1 overflow-visible md:overflow-y-auto w-full h-full relative">
           <div
-            className={`h-full w-full flex items-center justify-center ${pantallaActual === "reloj" ? "block" : "hidden"}`}
+            className={`h-full w-full flex items-center justify-center py-10 md:py-0 ${pantallaActual === "reloj" ? "block" : "hidden"}`}
           >
             <Timer configuracion={configActiva} />
           </div>
@@ -49,10 +46,10 @@ function App() {
           <div className={`h-full w-full ${pantallaActual === "configuracion" ? "block" : "hidden"}`}>
             <Configuracion />
           </div>
-        </div>
 
-        <div className={`h-full w-full ${pantallaActual === "historial" ? "block" : "hidden"}`}>
-          <Historial />
+          <div className={`h-full w-full ${pantallaActual === "historial" ? "block" : "hidden"}`}>
+            <Historial />
+          </div>
         </div>
       </section>
 

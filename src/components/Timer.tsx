@@ -186,20 +186,23 @@ export default function Timer({ configuracion }: TimerProps) {
   }, [estaActivo, tiempoSobra]);
 
   return (
-    <section className="flex flex-col justify-center items-center gap-4 w-full min-h-full bg-custom-bg transition-colors duration-300 p-6">
-      {/* TÍTULOS */}
-      <div className="flex flex-col items-center">
+    <section className="flex flex-col justify-center items-center gap-4 md:gap-8 w-full min-h-full bg-custom-bg transition-colors duration-300 p-4 md:p-6">
+      {/* TÍTULOS RESPONSIVOS */}
+      <div className="flex flex-col items-center mt-8 md:mt-0">
         <h2
-          className={`text-6xl font-bold uppercase tracking-widest transition-colors duration-500
+          className={`text-4xl md:text-6xl font-bold uppercase tracking-widest transition-colors duration-500 text-center
           ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`}
         >
           {modo.replace("_", " ")}
         </h2>
-        <span className="text-lg font-semibold text-custom-text opacity-60 mt-2">CICLO #{ciclos + 1}</span>
+        <span className="text-sm md:text-lg font-semibold text-custom-text opacity-60 mt-1 md:mt-2">
+          CICLO #{ciclos + 1}
+        </span>
       </div>
 
-      {/* RELOJ */}
-      <div className="relative flex items-center justify-center w-[25rem] h-[25rem]">
+      {/* RELOJ RESPONSIVO */}
+      {/* En móvil: w-72 h-72 (288px). En PC: w-[25rem] h-[25rem] (400px) */}
+      <div className="relative flex items-center justify-center w-72 h-72 md:w-[25rem] md:h-[25rem] my-4 md:my-0">
         <svg className="w-full h-full drop-shadow-2xl" viewBox="0 0 400 400" style={{ transform: "rotate(-90deg)" }}>
           <defs>
             <linearGradient id="gradienteTrabajo" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -236,39 +239,45 @@ export default function Timer({ configuracion }: TimerProps) {
           />
         </svg>
 
-        {/* Texto del tiempo central */}
+        {/* Texto del tiempo central responsivo */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-8xl text-custom-text font-extralight tracking-tighter">
+          <span className="text-6xl md:text-8xl text-custom-text font-extralight tracking-tighter">
             {formatoTiempo(tiempoSobra)}
           </span>
         </div>
       </div>
 
-      {/* 🔘 BOTONES */}
-      <div className="flex gap-10 items-center mt-4">
+      {/* 🔘 BOTONES RESPONSIVOS */}
+      <div className="flex gap-6 md:gap-10 items-center mt-2">
         <button
           onClick={botonReset}
-          className="w-16 h-16 flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-custom-text hover:scale-110 transition-all border border-white/5"
+          className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-custom-text hover:scale-110 transition-all border border-white/5"
         >
-          <FaUndoAlt size={24} />
+          <FaUndoAlt size={20} className="md:w-[24px] md:h-[24px]" />
         </button>
 
         <button
           onClick={botonPlayPausa}
-          className={`w-24 h-24 flex items-center justify-center rounded-full bg-custom-sidebar border border-white/10 hover:scale-110 transition-all shadow-2xl`}
+          className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-full bg-custom-sidebar border border-white/10 hover:scale-110 transition-all shadow-2xl"
         >
           {estaActivo ? (
-            <FaPause size={32} className={modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"} />
+            <FaPause
+              size={28}
+              className={`md:w-[32px] md:h-[32px] ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`}
+            />
           ) : (
-            <FaPlay size={32} className={`ml-2 ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`} />
+            <FaPlay
+              size={28}
+              className={`ml-2 md:w-[32px] md:h-[32px] ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`}
+            />
           )}
         </button>
 
         <button
           onClick={botonStop}
-          className="w-16 h-16 flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-red-500 hover:scale-110 transition-all border border-white/5"
+          className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-red-500 hover:scale-110 transition-all border border-white/5"
         >
-          <FaStop size={24} />
+          <FaStop size={20} className="md:w-[24px] md:h-[24px]" />
         </button>
       </div>
     </section>
