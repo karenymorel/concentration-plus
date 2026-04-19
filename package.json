@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "build": "tsc && vite build",
+    "build:exe": "tsc && vite build && electron-builder",
     "preview": "vite preview"
   },
   "dependencies": {
