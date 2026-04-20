@@ -22,6 +22,7 @@ export default function Sidebar() {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false);
   const [configParaEditar, setConfigParaEditar] = useState<ConfigPomodoro | null>(null);
+  const [configParaEliminar, setConfigParaEliminar] = useState<ConfigPomodoro | null>(null);
 
   const abrirParaNuevo = () => {
     setConfigParaEditar(null);
@@ -34,7 +35,7 @@ export default function Sidebar() {
   };
 
   const abrirParaEliminar = (config: ConfigPomodoro) => {
-    setConfigActiva(config);
+    setConfigParaEliminar(config);
     setModalEliminarAbierto(true);
   };
 
@@ -70,7 +71,9 @@ export default function Sidebar() {
               `}
             >
               <span
-                className={`font-semibold text-xs md:text-base whitespace-nowrap ${configActiva?.id === config.id ? "text-custom-text" : "text-custom-text/50"}`}
+                className={`font-semibold text-xs md:text-base whitespace-nowrap ${
+                  configActiva?.id === config.id ? "text-custom-text" : "text-custom-text/50"
+                }`}
               >
                 {config.nombre}
               </span>
@@ -111,12 +114,18 @@ export default function Sidebar() {
           >
             <div
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${pantallaActual === "reloj" ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]" : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"}`}
+              ${
+                pantallaActual === "reloj"
+                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
+                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+              }`}
             >
               <FiClock className="w-5 h-5 md:w-[26px] md:h-[26px]" />
             </div>
             <h3
-              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${pantallaActual === "reloj" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"}`}
+              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
+                pantallaActual === "reloj" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+              }`}
             >
               Reloj
             </h3>
@@ -129,12 +138,18 @@ export default function Sidebar() {
           >
             <div
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${pantallaActual === "calendario" ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]" : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"}`}
+              ${
+                pantallaActual === "calendario"
+                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
+                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+              }`}
             >
               <FiCalendar className="w-5 h-5 md:w-[26px] md:h-[26px]" />
             </div>
             <h3
-              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${pantallaActual === "calendario" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"}`}
+              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
+                pantallaActual === "calendario" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+              }`}
             >
               Calendario
             </h3>
@@ -147,12 +162,18 @@ export default function Sidebar() {
           >
             <div
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${pantallaActual === "estadisticas" ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]" : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"}`}
+              ${
+                pantallaActual === "estadisticas"
+                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
+                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+              }`}
             >
               <MdAutoGraph className="w-6 h-6 md:w-[26px] md:h-[26px]" />
             </div>
             <h3
-              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${pantallaActual === "estadisticas" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"}`}
+              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
+                pantallaActual === "estadisticas" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+              }`}
             >
               Estadísticas
             </h3>
@@ -165,12 +186,18 @@ export default function Sidebar() {
           >
             <div
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${pantallaActual === "historial" ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]" : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"}`}
+              ${
+                pantallaActual === "historial"
+                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
+                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+              }`}
             >
               <FaClipboardList className="w-5 h-5 md:w-[26px] md:h-[26px]" />
             </div>
             <h3
-              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${pantallaActual === "historial" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"}`}
+              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
+                pantallaActual === "historial" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+              }`}
             >
               Historial
             </h3>
@@ -183,12 +210,18 @@ export default function Sidebar() {
           >
             <div
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${pantallaActual === "configuracion" ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]" : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"}`}
+              ${
+                pantallaActual === "configuracion"
+                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
+                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+              }`}
             >
               <FiSettings className="w-5 h-5 md:w-[26px] md:h-[26px]" />
             </div>
             <h3
-              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${pantallaActual === "configuracion" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"}`}
+              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
+                pantallaActual === "configuracion" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+              }`}
             >
               Ajustes
             </h3>
@@ -206,10 +239,13 @@ export default function Sidebar() {
         estaAbierto={modalEliminarAbierto}
         alCancelar={() => setModalEliminarAbierto(false)}
         alAceptar={() => {
-          eliminarConfiguracion(configActiva.id);
+          if (configParaEliminar) {
+            eliminarConfiguracion(configParaEliminar.id);
+          }
           setModalEliminarAbierto(false);
+          setConfigParaEliminar(null);
         }}
-        nombreConfigAEliminar={configActiva?.nombre}
+        nombreConfigAEliminar={configParaEliminar?.nombre || "la configuración"}
       />
     </section>
   );

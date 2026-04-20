@@ -5,10 +5,19 @@ import { useConfigStore } from "../store/useConfigStore";
 import { toast } from "sonner";
 
 interface TimerProps {
-  configuracion: ConfigPomodoro;
+  configuracion: ConfigPomodoro | null;
 }
 
 export default function Timer({ configuracion }: TimerProps) {
+  if (!configuracion) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full text-center p-8">
+        <h2 className="text-2xl font-bold text-custom-text/50">No hay pomodoro activo</h2>
+        <p className="text-custom-text/30 mt-2">El reloj de la configuración seleccionada aparecerá acá.</p>
+      </div>
+    );
+  }
+
   const tiempo_trabajo = configuracion.tiempo_trabajo * 60;
   const tiempo_corto_descanso = configuracion.tiempo_corto_descanso * 60;
   const tiempo_largo_descanso = configuracion.tiempo_largo_descanso * 60;
@@ -117,7 +126,7 @@ export default function Timer({ configuracion }: TimerProps) {
           setModo("trabajo");
           setTiempoSobra(tiempo_trabajo);
           setCiclos(0);
-          toast.error("Sesión detenida y guardada en bitácora");
+          toast.error("Sesión detenida y guardada en el historial");
         },
       },
       cancel: {

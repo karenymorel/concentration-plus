@@ -2,7 +2,7 @@ interface ModalEliminarProps {
   estaAbierto: boolean;
   alCancelar: () => void;
   alAceptar: () => void;
-  nombreConfigAEliminar: string;
+  nombreConfigAEliminar?: string;
 }
 
 export default function ModalEliminar({

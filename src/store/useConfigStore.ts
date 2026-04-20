@@ -5,7 +5,7 @@ import { RegistroPomodoro } from "../models/RegistroPomodoro";
 
 interface ConfigState {
   listaConfiguraciones: ConfigPomodoro[];
-  configActiva: ConfigPomodoro;
+  configActiva: ConfigPomodoro | null;
   setConfigActiva: (config: ConfigPomodoro) => void;
   agregarConfiguracion: (config: ConfigPomodoro) => void;
   eliminarConfiguracion: (id: string) => void;
@@ -16,7 +16,6 @@ interface ConfigState {
   eliminarRegistro: (id: string) => void;
   editarRegistro: (id: string, nuevosMinutos: number) => void;
 
-  // NUEVO: "historial" añadido a los tipos permitidos
   pantallaActual: "reloj" | "estadisticas" | "calendario" | "configuracion" | "historial";
   setPantallaActual: (pantalla: "reloj" | "estadisticas" | "calendario" | "configuracion" | "historial") => void;
 
@@ -33,40 +32,8 @@ interface ConfigState {
 export const useConfigStore = create<ConfigState>()(
   persist(
     (set, get) => ({
-      listaConfiguraciones: [
-        {
-          id: "1",
-          nombre: "25/5 Estudio",
-          tiempo_trabajo: 25,
-          tiempo_corto_descanso: 5,
-          tiempo_largo_descanso: 15,
-          ciclos_hasta_descanso_largo: 4,
-        },
-        {
-          id: "2",
-          nombre: "50/10 Deep Work",
-          tiempo_trabajo: 50,
-          tiempo_corto_descanso: 10,
-          tiempo_largo_descanso: 30,
-          ciclos_hasta_descanso_largo: 3,
-        },
-        {
-          id: "3",
-          nombre: "15/3 Rápido",
-          tiempo_trabajo: 15,
-          tiempo_corto_descanso: 3,
-          tiempo_largo_descanso: 10,
-          ciclos_hasta_descanso_largo: 4,
-        },
-      ],
-      configActiva: {
-        id: "1",
-        nombre: "25/5 Estudio",
-        tiempo_trabajo: 25,
-        tiempo_corto_descanso: 5,
-        tiempo_largo_descanso: 15,
-        ciclos_hasta_descanso_largo: 4,
-      },
+      listaConfiguraciones: [],
+      configActiva: null,
 
       historial: [],
 
@@ -117,8 +84,8 @@ export const useConfigStore = create<ConfigState>()(
         const state = get();
         const nuevaLista = state.listaConfiguraciones.filter((config) => config.id !== idABorrar);
         set({ listaConfiguraciones: nuevaLista });
-        if (state.configActiva.id === idABorrar) {
-          set({ configActiva: nuevaLista[0] });
+        if (state.configActiva?.id === idABorrar) {
+          set({ configActiva: nuevaLista[0] || null });
         }
       },
       editarConfiguracion: (configModificada) => {
@@ -127,7 +94,7 @@ export const useConfigStore = create<ConfigState>()(
           config.id === configModificada.id ? configModificada : config,
         );
         set({ listaConfiguraciones: nuevaLista });
-        if (state.configActiva.id === configModificada.id) {
+        if (state.configActiva?.id === configModificada.id) {
           set({ configActiva: configModificada });
         }
       },

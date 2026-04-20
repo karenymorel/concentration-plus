@@ -32,7 +32,7 @@ export default function Historial() {
     // 🐛 CORRECCIÓN DE SCROLL: h-full y overflow-y-auto añadidos aquí
     <section className="flex flex-col items-center w-full h-full overflow-y-auto p-8 pb-24 animate-fade-in bg-custom-bg transition-colors duration-300">
       <div className="w-full max-w-5xl flex justify-between items-center mb-8 shrink-0">
-        <h2 className="text-4xl font-bold text-custom-text">Bitácora de Sesiones</h2>
+        <h2 className="text-4xl font-bold text-custom-text">Historial de Sesiones</h2>
         <div className="bg-custom-sidebar px-4 py-2 rounded-xl border border-white/5 shadow-md">
           <span className="text-[#EC4166] font-bold">{historial.length}</span>{" "}
           <span className="text-custom-text/60">Registros Totales</span>
@@ -41,9 +41,7 @@ export default function Historial() {
 
       {historial.length === 0 ? (
         <div className="bg-custom-sidebar p-10 rounded-3xl border border-white/5 shadow-xl text-center w-full max-w-5xl mt-10 shrink-0">
-          <p className="text-custom-text/40 italic text-lg">
-            Aún no hay sesiones registradas. ¡Tu bitácora está en blanco!
-          </p>
+          <p className="text-custom-text/40 italic text-lg">Aún no hay sesiones registradas.</p>
         </div>
       ) : (
         <div className="w-full max-w-5xl space-y-10">
