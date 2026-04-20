@@ -139,17 +139,13 @@ export default function Timer({ configuracion }: TimerProps) {
     });
   };
 
-  // 🐛 SOLUCIÓN DEL BUG AQUÍ
   const cambiarModoAutomaticamente = () => {
     if (modo === "trabajo") {
-      // 1. Aumentamos los ciclos primero
       const nuevosCiclos = ciclos + 1;
       setCiclos(nuevosCiclos);
 
-      // 2. Comprobamos si toca descanso largo con los ciclos nuevos
       const esDescansoLargo = nuevosCiclos % configuracion.ciclos_hasta_descanso_largo === 0;
 
-      // 3. Guardamos en el store local
       guardarRegistro({
         minutos: configuracion.tiempo_trabajo,
         minutosDescanso: esDescansoLargo ? configuracion.tiempo_largo_descanso : configuracion.tiempo_corto_descanso,
@@ -157,10 +153,8 @@ export default function Timer({ configuracion }: TimerProps) {
         nombreModo: configuracion.nombre,
       });
 
-      // 4. Guardamos en Google Calendar
       guardarEnGoogleCalendar();
 
-      // 5. Cambiamos de modo y notificamos
       if (esDescansoLargo) {
         setModo("descanso_largo");
         setTiempoSobra(tiempo_largo_descanso);
