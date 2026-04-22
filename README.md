@@ -1,30 +1,50 @@
-# React + TypeScript + Vite
+# 💎 Concentration PLUS – Pomodoro Timer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación Pomodoro moderna con estadísticas, historial, calendario y sincronización con Google Calendar.  
+Desarrollada con **React + TypeScript + Zustand + TailwindCSS**.
 
-Currently, two official plugins are available:
+### LINK DEMO: https://concentration-plus.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Características
 
-## Expanding the ESLint configuration
+- ⏱️ **Temporizador Pomodoro** con animación SVG circular y modos: trabajo, descanso corto, descanso largo.
+- 📊 **Estadísticas** dinámicas: gráficos de progreso diario/semanal/mensual.
+- 📜 **Historial** de sesiones: registra cada pomodoro completado o abortado, con fecha, duración y estado.
+- 📅 **Calendario** visual para ver tu actividad día a día.
+- ⚙️ **Configuraciones personalizables**: crea, edita y elimina tus propios preajustes (duración de trabajo/descanso, ciclos).
+- 🌙 **Modo claro / oscuro** (día/noche) que persiste en el almacenamiento local.
+- 🔔 **Notificaciones** y sonidos al finalizar cada sesión.
+- 🔗 **Integración con Google Calendar** (opcional): guarda automáticamente los pomodoros completados como eventos.
+- 📱 **Diseño 100% responsivo**: funciona perfectamente en celualres, tablets y escritorio.
+- 💾 **Persistencia de datos** con Zustand + localStorage: tu configuración e historial nunca se pierden.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🧪 Modo demostración (demo)
 
-- Configure the top-level `parserOptions` property like this:
+El proyecto incluye un **modo demo** que se activa mediante una variable de entorno.  
+En el repositorio (GitHub) la aplicación arranca **completamente vacía** (sin datos precargados), ideal para que los reclutadores vean el código base limpio.  
+En el despliegue de **Vercel** se activa el modo demo, mostrando preajustes de ejemplo y un historial de sesiones ficticio para que la experiencia de prueba sea más atractiva.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+Para activar el modo demo localmente, crea un archivo `.env` en la raíz:
+
+```env
+VITE_DEMO_MODE=true
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Con false o sin la variable, la aplicación inicia sin datos.
+
+## 🛠️ Tecnologías utilizadas
+
+- React 18 + TypeScript
+- Zustand
+- TailwindCSS
+- React Icons
+- Sonner
+- Recharts
+- Google Calendar API
+- Vite (entorno de desarrollo y build)
+
+## 📄 Licencia
+Este proyecto es de código abierto y está disponible bajo la licencia MIT.
+
+## ✍️ Autor
+Karen Morel – @karenymorel 
