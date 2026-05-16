@@ -1,0 +1,27 @@
+{
+  "general": {
+    "app_name": "Concentration Plus",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "change_to_spanish": "Change to Spanish",
+    "change_to_english": "Change to English"
+  },
+  "sidebar": {
+    "timer": "Timer",
+    "history": "History",
+    "stats": "Statistics",
+    "settings": "Settings"
+  },
+  "calendario": {
+    "titulo": "Calendar",
+    "desconectar": "Disconnect",
+    "google_titulo": "Google Calendar",
+    "google_desc": "Connect your account to sync your pomodoros.",
+    "google_boton": "Connect with Google",
+    "eventos_hoy": "Today's Events",
+    "sin_eventos": "No events for today.",
+    "todo_el_dia": "All day"
+  }
+}

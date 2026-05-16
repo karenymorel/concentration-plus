@@ -2,13 +2,14 @@ import { useConfigStore } from "../store/useConfigStore";
 import { FaTrash, FaPen, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { toast } from "sonner";
 import { RegistroPomodoro } from "../models/RegistroPomodoro";
+import { useTranslation } from "react-i18next";
 
 export default function Historial() {
   const historial = useConfigStore((state) => state.historial);
   const eliminarRegistro = useConfigStore((state) => state.eliminarRegistro);
   const editarRegistro = useConfigStore((state) => state.editarRegistro);
+  const { t } = useTranslation();
 
-  // AGRUPAR POR FECHA
   const historialAgrupado = historial.reduce(
     (acumulador, registro) => {
       if (!acumulador[registro.fecha]) acumulador[registro.fecha] = [];
@@ -18,10 +19,8 @@ export default function Historial() {
     {} as Record<string, RegistroPomodoro[]>,
   );
 
-  // ORDENAR FECHAS DE MÁS RECIENTE A MÁS ANTIGUA
   const fechasOrdenadas = Object.keys(historialAgrupado).sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
-  // FORMATEAR FECHA A ESPAÑOL ("Martes, 3 de Enero")
   const formatearFecha = (fechaISO: string) => {
     const [year, month, day] = fechaISO.split("-");
     const fecha = new Date(Number(year), Number(month) - 1, Number(day));
@@ -29,10 +28,9 @@ export default function Historial() {
   };
 
   return (
-    // 🐛 CORRECCIÓN DE SCROLL: h-full y overflow-y-auto añadidos aquí
     <section className="flex flex-col items-center w-full h-full overflow-y-auto p-8 pb-24 animate-fade-in bg-custom-bg transition-colors duration-300">
       <div className="w-full max-w-5xl flex justify-between items-center mb-8 shrink-0">
-        <h2 className="text-4xl font-bold text-custom-text">Historial de Sesiones</h2>
+        <h2 className="text-4xl font-bold text-custom-text">{t("historial.titulo")}</h2>
         <div className="bg-custom-sidebar px-4 py-2 rounded-xl border border-white/5 shadow-md">
           <span className="text-[#EC4166] font-bold">{historial.length}</span>{" "}
           <span className="text-custom-text/60">Registros Totales</span>

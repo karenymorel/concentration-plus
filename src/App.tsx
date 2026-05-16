@@ -8,6 +8,7 @@ import Calendario from "./components/Calendario";
 import Configuracion from "./components/Configuracion";
 import Historial from "./components/Historial";
 import { Toaster } from "sonner";
+import { useTranslation } from "react-i18next";
 
 function App() {
   const configActiva = useConfigStore((state) => state.configActiva);
@@ -15,21 +16,20 @@ function App() {
   const listaConfiguraciones = useConfigStore((state) => state.listaConfiguraciones);
   const agregarConfiguracion = useConfigStore((state) => state.agregarConfiguracion);
   const setConfigActiva = useConfigStore((state) => state.setConfigActiva);
+  const idioma = useConfigStore((state) => state.idioma);
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
 
     if (!isDemoMode) {
       // Modo NO demo: asegurarse de que el store esté completamente vacío
-      // Si ya hay configuraciones (demo o reales), las borramos
       if (listaConfiguraciones.length > 0) {
-        // Resetear el store a su estado inicial vacío
         useConfigStore.setState({
           listaConfiguraciones: [],
           configActiva: null,
           historial: [],
         });
-        // También limpiar localStorage para que no persista
         localStorage.removeItem("pomodoro-config-storage");
       }
       return;
@@ -84,6 +84,10 @@ function App() {
       useConfigStore.setState({ historial: historialDemo });
     }
   }, [listaConfiguraciones, agregarConfiguracion, setConfigActiva]);
+
+  useEffect(() => {
+    i18n.changeLanguage(idioma);
+  }, [idioma, i18n]);
 
   return (
     <main className="flex flex-col-reverse md:flex-row min-h-[100dvh] md:h-screen w-full text-custom-text bg-custom-bg transition-colors duration-300">

@@ -6,6 +6,7 @@ import ModalConfig from "./ModalConfig";
 import ModalEliminar from "./ModalEliminar";
 import { useConfigStore } from "../store/useConfigStore";
 import { ConfigPomodoro } from "../models/ConfigPomodoro";
+import IdiomaToggle from "./IdiomaToggle";
 
 export default function Sidebar() {
   const {
@@ -106,6 +107,9 @@ export default function Sidebar() {
       </div>
 
       <div className="order-2 md:order-1 w-full border-t border-white/5 md:border-none pt-2 md:pt-0">
+        <div className="flex justify-center mb-6">
+          <IdiomaToggle />
+        </div>
         <ul className="flex flex-row md:flex-col justify-around md:justify-start w-full md:space-y-6 mt-1 md:mt-4">
           {/* BOTÓN: Reloj */}
           <li

@@ -27,6 +27,8 @@ interface ConfigState {
   toggleNotificaciones: () => void;
   theme: "dia" | "noche";
   toggleTheme: () => void;
+  setIdioma: (idioma: "es" | "en") => void;
+  idioma: "en" | "es";
 }
 
 // Datos de demostración (solo si VITE_DEMO_MODE === "true")
@@ -164,6 +166,9 @@ export const useConfigStore = create<ConfigState>()(
           set({ configActiva: configModificada });
         }
       },
+
+      idioma: "en",
+      setIdioma: (idioma) => set({ idioma }),
     }),
     {
       name: "pomodoro-config-storage",
