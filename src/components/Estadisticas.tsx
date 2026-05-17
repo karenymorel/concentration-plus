@@ -15,15 +15,15 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import { useTranslation } from "react-i18next";
 
 export default function Estadisticas() {
+  const { t } = useTranslation();
   const historial = useConfigStore((state) => state.historial);
 
-  // --- 1. CÁLCULOS PARA TARJETAS DE RESUMEN ---
   const minutosTotales = historial.reduce((total, recibo) => total + recibo.minutos, 0);
   const pomodorosTotales = historial.length;
 
-  // --- 2. PREPARANDO DATOS: ÚLTIMOS 7 DÍAS ---
   const agruparPorDia = historial.reduce(
     (acumulador, recibo) => {
       if (!acumulador[recibo.fecha]) {
@@ -41,7 +41,6 @@ export default function Estadisticas() {
 
   const datosUltimosDias = Object.values(agruparPorDia).slice(-7);
 
-  // --- 3. PREPARANDO DATOS: DÍAS DE LA SEMANA (Para Torta) ---
   const diasSemana = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
   const datosPorDiaSemana = historial.reduce(
     (acc, recibo) => {
@@ -63,7 +62,6 @@ export default function Estadisticas() {
 
   const COLORES_TORTA = ["#EC4166", "#72c1d9", "#f06b88", "#338293", "#f494a9", "#66a1ae", "#f8bdca"];
 
-  // Estilo común para los Tooltips en modo oscuro
   const tooltipStyle = {
     backgroundColor: "var(--bg-app)",
     border: "1px solid rgba(255,255,255,0.1)",
@@ -73,24 +71,24 @@ export default function Estadisticas() {
 
   return (
     <section className="flex flex-col items-center w-full min-h-full p-8 animate-fade-in bg-custom-bg transition-colors duration-300">
-      <h2 className="text-4xl font-bold text-custom-text mb-8">Tus Estadísticas</h2>
+      <h2 className="text-4xl font-bold text-custom-text mb-8">{t("estadisticas.titulo")}</h2>
 
       {/* TARJETAS DE RESUMEN */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl mb-10">
         <div className="bg-custom-sidebar p-8 rounded-3xl shadow-2xl border border-white/5 text-center flex flex-col items-center">
-          <div className="text-custom-text/60 text-lg font-semibold">Sesiones Completadas</div>
+          <div className="text-custom-text/60 text-lg font-semibold">{t("estadisticas.sesiones_titulo")}</div>
           <div className="text-[#EC4166] text-6xl font-bold my-2 drop-shadow-[0_0_15px_rgba(236,65,102,0.3)]">
             {pomodorosTotales}
           </div>
-          <div className="text-custom-text/30 text-sm italic">Pomodoros finalizados</div>
+          <div className="text-custom-text/30 text-sm italic">{t("estadisticas.sesiones_desc")}</div>
         </div>
 
         <div className="bg-custom-sidebar p-8 rounded-3xl shadow-2xl border border-white/5 text-center flex flex-col items-center">
-          <div className="text-custom-text/60 text-lg font-semibold">Tiempo de Enfoque</div>
+          <div className="text-custom-text/60 text-lg font-semibold">{t("estadisticas.tiempo_titulo")}</div>
           <div className="text-[#72c1d9] text-6xl font-bold my-2 drop-shadow-[0_0_15px_rgba(114,193,217,0.3)]">
             {minutosTotales}m
           </div>
-          <div className="text-custom-text/30 text-sm italic">Minutos totales productivos</div>
+          <div className="text-custom-text/30 text-sm italic">{t("estadisticas.tiempo_desc")}</div>
         </div>
       </div>
 
@@ -98,7 +96,9 @@ export default function Estadisticas() {
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 pb-10">
         {/* GRÁFICO 1: BARRAS (VOLUMEN) */}
         <div className="bg-custom-sidebar p-6 rounded-3xl shadow-xl border border-white/5">
-          <h3 className="text-xl font-bold text-custom-text/80 mb-6 text-center">Minutos por Día</h3>
+          <h3 className="text-xl font-bold text-custom-text/80 mb-6 text-center">
+            {t("estadisticas.grafico_minutos")}
+          </h3>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={datosUltimosDias}>
@@ -113,7 +113,9 @@ export default function Estadisticas() {
 
         {/* GRÁFICO 2: ÁREA (FRECUENCIA) */}
         <div className="bg-custom-sidebar p-6 rounded-3xl shadow-xl border border-white/5">
-          <h3 className="text-xl font-bold text-custom-text/80 mb-6 text-center">Frecuencia (Sesiones)</h3>
+          <h3 className="text-xl font-bold text-custom-text/80 mb-6 text-center">
+            {t("estadisticas.grafico_frecuencia")}
+          </h3>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={datosUltimosDias}>
@@ -160,7 +162,9 @@ export default function Estadisticas() {
 
         {/* GRÁFICO 4: LÍNEA (PROMEDIO) */}
         <div className="bg-custom-sidebar p-6 rounded-3xl shadow-xl border border-white/5">
-          <h3 className="text-xl font-bold text-custom-text/80 mb-6 text-center">Promedio por Sesión (Min)</h3>
+          <h3 className="text-xl font-bold text-custom-text/80 mb-6 text-center">
+            {t("estadisticas.grafico_promedio")}
+          </h3>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={datosUltimosDias}>

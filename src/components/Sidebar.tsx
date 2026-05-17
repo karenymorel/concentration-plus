@@ -7,8 +7,10 @@ import ModalEliminar from "./ModalEliminar";
 import { useConfigStore } from "../store/useConfigStore";
 import { ConfigPomodoro } from "../models/ConfigPomodoro";
 import IdiomaToggle from "./IdiomaToggle";
+import { useTranslation } from "react-i18next";
 
 export default function Sidebar() {
+  const { t } = useTranslation();
   const {
     listaConfiguraciones,
     configActiva,
@@ -55,7 +57,7 @@ export default function Sidebar() {
           onClick={abrirParaNuevo}
           className="hidden md:flex w-full items-center justify-between px-6 py-4 rounded-[1.2rem] bg-custom-bg border border-white/5 shadow-sm text-sm font-bold text-custom-text/40 hover:bg-custom-bg/80 transition-all mb-4"
         >
-          NUEVO PREAJUSTE <span className="text-xl font-light">+</span>
+          {t("sidebar.new_preset")} <span className="text-xl font-light">+</span>
         </button>
 
         <div className="flex flex-row md:flex-col gap-2 md:gap-3 overflow-x-auto md:overflow-y-auto max-h-[30vh] pb-2 md:pb-0 pr-2 scrollbar-thin w-full">
@@ -131,7 +133,7 @@ export default function Sidebar() {
                 pantallaActual === "reloj" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
               }`}
             >
-              Reloj
+              {t("sidebar.timer")}
             </h3>
           </li>
 
@@ -155,7 +157,7 @@ export default function Sidebar() {
                 pantallaActual === "calendario" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
               }`}
             >
-              Calendario
+              {t("sidebar.calendar")}
             </h3>
           </li>
 
@@ -179,7 +181,7 @@ export default function Sidebar() {
                 pantallaActual === "estadisticas" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
               }`}
             >
-              Estadísticas
+              {t("sidebar.stats")}
             </h3>
           </li>
 
@@ -203,7 +205,7 @@ export default function Sidebar() {
                 pantallaActual === "historial" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
               }`}
             >
-              Historial
+              {t("sidebar.history")}
             </h3>
           </li>
 
@@ -227,7 +229,7 @@ export default function Sidebar() {
                 pantallaActual === "configuracion" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
               }`}
             >
-              Ajustes
+              {t("sidebar.settings")}
             </h3>
           </li>
         </ul>

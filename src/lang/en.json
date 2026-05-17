@@ -10,9 +10,11 @@
   },
   "sidebar": {
     "timer": "Timer",
-    "history": "History",
+    "calendar": "Calendar",
     "stats": "Statistics",
-    "settings": "Settings"
+    "history": "History",
+    "settings": "Settings",
+    "new_preset": "NEW PRESET"
   },
   "calendario": {
     "titulo": "Calendar",
@@ -54,5 +56,17 @@
       "borrar_si": "Yes, delete",
       "borrar_exito": "Record deleted"
     }
+  },
+  "estadisticas": {
+    "titulo": "Your Statistics",
+    "sesiones_titulo": "Completed Sessions",
+    "sesiones_desc": "Finished Pomodoros",
+    "tiempo_titulo": "Focus Time",
+    "tiempo_desc": "Total productive minutes",
+    "grafico_minutos": "Minutes per Day",
+    "grafico_frecuencia": "Frequency (Sessions)",
+    "grafico_activos": "Most Active Days",
+    "grafico_promedio": "Average per Session (Min)",
+    "dias": "Mon,Tue,Wed,Thu,Fri,Sat,Sun"
   }
 }

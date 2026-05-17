@@ -10,7 +10,9 @@
     "timer": "Temporizador",
     "history": "Historial",
     "stats": "Estadísticas",
-    "settings": "Ajustes"
+    "settings": "Ajustes",
+    "calendar": "Calendario",
+    "new_preset": "NUEVO PREAJUSTE"
   },
   "calendario": {
     "titulo": "Calendario",
@@ -52,5 +54,17 @@
       "borrar_si": "Sí, borrar",
       "borrar_exito": "Registro eliminado"
     }
+  },
+  "estadisticas": {
+    "titulo": "Tus Estadísticas",
+    "sesiones_titulo": "Sesiones Completadas",
+    "sesiones_desc": "Pomodoros finalizados",
+    "tiempo_titulo": "Tiempo de Enfoque",
+    "tiempo_desc": "Minutos totales productivos",
+    "grafico_minutos": "Minutos por Día",
+    "grafico_frecuencia": "Frecuencia (Sesiones)",
+    "grafico_activos": "Días más Activos",
+    "grafico_promedio": "Promedio por Sesión (Min)",
+    "dias": "Lun,Mar,Mié,Jue,Vie,Sáb,Dom"
   }
 }
