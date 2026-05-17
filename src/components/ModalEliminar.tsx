@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 interface ModalEliminarProps {
   estaAbierto: boolean;
   alCancelar: () => void;
@@ -12,6 +14,8 @@ export default function ModalEliminar({
   nombreConfigAEliminar,
 }: ModalEliminarProps) {
   if (!estaAbierto) return null;
+
+  const { t } = useTranslation();
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[110] flex justify-center items-center animate-fade-in p-4">
@@ -29,11 +33,11 @@ export default function ModalEliminar({
         </div>
 
         {/* TEXTOS */}
-        <h3 className="font-bold text-2xl mb-2 text-custom-text">¿Estás segura?</h3>
+        <h3 className="font-bold text-2xl mb-2 text-custom-text">{t("modals.eliminar.titulo")}</h3>
         <p className="text-custom-text/60 mb-8 leading-relaxed">
-          Estás a punto de eliminar el modo <br />
+          {t("modals.eliminar.desc")} <br />
           <span className="font-bold text-red-500">"{nombreConfigAEliminar}"</span>.<br />
-          <span className="text-sm opacity-50 italic">Esta acción no se puede deshacer.</span>
+          <span className="text-sm opacity-50 italic">{t("modals.eliminar.desc_undo")}</span>
         </p>
 
         {/* ACCIONES */}
@@ -48,7 +52,7 @@ export default function ModalEliminar({
             onClick={alAceptar}
             className="px-8 py-3 rounded-xl font-bold text-white bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/20 active:scale-95 transition-all"
           >
-            Sí, Eliminar
+            {t("modals.eliminar.btn_confirmar")}
           </button>
         </div>
       </div>

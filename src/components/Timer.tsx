@@ -3,17 +3,20 @@ import { FaPlay, FaPause, FaStop, FaUndoAlt } from "react-icons/fa";
 import { ConfigPomodoro } from "../models/ConfigPomodoro";
 import { useConfigStore } from "../store/useConfigStore";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface TimerProps {
   configuracion: ConfigPomodoro | null;
 }
 
 export default function Timer({ configuracion }: TimerProps) {
+  const { t } = useTranslation();
+
   if (!configuracion) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center p-8">
-        <h2 className="text-2xl font-bold text-custom-text/50">No hay pomodoro activo</h2>
-        <p className="text-custom-text/30 mt-2">El reloj de la configuración seleccionada aparecerá acá.</p>
+        <h2 className="text-2xl font-bold text-custom-text/50">{t("timer.sin_configuracion_titulo")} </h2>
+        <p className="text-custom-text/30 mt-2">{t("timer.sin_configuracion_desc")}</p>
       </div>
     );
   }
@@ -32,7 +35,7 @@ export default function Timer({ configuracion }: TimerProps) {
   const sonidoHabilitado = useConfigStore((state) => state.sonidoHabilitado);
   const notificacionesHabilitadas = useConfigStore((state) => state.notificacionesHabilitadas);
 
-  // 🧮 --- MATEMÁTICAS DEL SVG ---
+  // --- MATEMÁTICAS DEL SVG ---
   const radio = 160;
   const strokeWidth = 26;
   const circunferencia = 2 * Math.PI * radio;
@@ -46,10 +49,9 @@ export default function Timer({ configuracion }: TimerProps) {
   const porcentaje_tiempo = tiempoSobra / (obtenerTiempoTotal() || 1);
   const strokeDashoffset = -((1 - porcentaje_tiempo) * circunferencia);
 
-  // NOTIFICACIONES
   const enviarNotificacion = (mensaje: string) => {
     toast.success(mensaje, {
-      description: "¡Sigue así!",
+      description: t("timer.notificaciones.sigue_asi"),
       icon: modo === "trabajo" ? "☕" : "🚀",
     });
 
@@ -106,11 +108,11 @@ export default function Timer({ configuracion }: TimerProps) {
     const estabaCorriendo = estaActivo;
     setEstaActivo(false);
 
-    toast.warning("¿Detener sesión completa?", {
+    toast.warning(t("timer.stop.titulo"), {
       description: "Se guardará el tiempo parcial en el historial.",
       duration: Infinity,
       action: {
-        label: "Sí, detener",
+        label: t("timer.stop.confirmar"),
         onClick: () => {
           const minutosRealizados = Math.ceil((tiempo_trabajo - tiempoSobra) / 60);
 
@@ -126,11 +128,11 @@ export default function Timer({ configuracion }: TimerProps) {
           setModo("trabajo");
           setTiempoSobra(tiempo_trabajo);
           setCiclos(0);
-          toast.error("Sesión detenida y guardada en el historial");
+          toast.error(t("timer.stop.exito"));
         },
       },
       cancel: {
-        label: "No, continuar",
+        label: t("timer.stop.cancelar"),
         onClick: () => {
           if (estabaCorriendo) setEstaActivo(true);
           toast.dismiss();
@@ -196,10 +198,10 @@ export default function Timer({ configuracion }: TimerProps) {
           className={`text-4xl md:text-6xl font-bold uppercase tracking-widest transition-colors duration-500 text-center
           ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`}
         >
-          {modo.replace("_", " ")}
+          {t(`timer.modos.${modo}`)}
         </h2>
         <span className="text-sm md:text-lg font-semibold text-custom-text opacity-60 mt-1 md:mt-2">
-          CICLO #{ciclos + 1}
+          {t("timer.ciclo")} {ciclos + 1}
         </span>
       </div>
 

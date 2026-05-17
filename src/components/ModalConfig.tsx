@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ConfigPomodoro } from "../models/ConfigPomodoro";
+import { useTranslation } from "react-i18next";
 
 interface ModalConfigProps {
   estaAbierto: boolean;
@@ -15,6 +16,8 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
   const [descansoLargo, setDescansoLargo] = useState(15);
   const [ciclos, setCiclos] = useState(4);
   const [errorNombre, setErrorNombre] = useState(false);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (estaAbierto) {
@@ -66,16 +69,16 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
       <div className="bg-custom-sidebar rounded-3xl p-8 w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10 relative transition-colors duration-300">
         {/* TÍTULO */}
         <h3 className="font-bold text-2xl mb-6 text-custom-text">
-          {configAEditar ? "Editar Configuración" : "Nueva Configuración"}
+          {configAEditar ? t("modals.config.titulo_editar") : t("modals.config.titulo_nuevo")}
         </h3>
 
         <div className="space-y-5">
           {/* NOMBRE */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-custom-text/60 ml-1">Nombre del modo</label>
+            <label className="text-sm font-semibold text-custom-text/60 ml-1">{t("modals.config.nombre_label")} </label>
             <input
               type="text"
-              placeholder="Ej: Super Focus..."
+              placeholder={t("modals.config.nombre_placeholder")}
               className={`w-full px-4 py-3 rounded-xl bg-custom-bg text-custom-text border transition-all outline-none
                 ${errorNombre ? "border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]" : "border-white/5 focus:border-[#EC4166]/50"}`}
               value={nombre}
@@ -85,7 +88,7 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
               }}
             />
             {errorNombre && (
-              <span className="text-red-400 text-xs mt-1 ml-1 font-medium">⚠️ El nombre es obligatorio.</span>
+              <span className="text-red-400 text-xs mt-1 ml-1 font-medium">{t("modals.config.nombre_error")} </span>
             )}
           </div>
 
@@ -93,7 +96,7 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
           <div className="flex gap-4">
             <div className="flex flex-col gap-2 w-1/2">
               <label className="text-xs font-bold text-custom-text/40 uppercase tracking-wider ml-1">
-                Trabajo (min)
+                {t("modals.config.trabajo_label")} (min)
               </label>
               <input
                 type="number"
@@ -104,7 +107,7 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
             </div>
             <div className="flex flex-col gap-2 w-1/2">
               <label className="text-xs font-bold text-custom-text/40 uppercase tracking-wider ml-1">
-                D. Corto (min)
+                {t("modals.config.descanso_corto_label")} (min)
               </label>
               <input
                 type="number"
@@ -119,7 +122,7 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
           <div className="flex gap-4">
             <div className="flex flex-col gap-2 w-1/2">
               <label className="text-xs font-bold text-custom-text/40 uppercase tracking-wider ml-1">
-                D. Largo (min)
+                {t("modals.config.descanso_largo_label")} (min)
               </label>
               <input
                 type="number"
@@ -130,7 +133,7 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
             </div>
             <div className="flex flex-col gap-2 w-1/2">
               <label className="text-xs font-bold text-custom-text/40 uppercase tracking-wider ml-1">
-                Ciclos p/ Largo
+                {t("modals.config.ciclos_label")}
               </label>
               <input
                 type="number"
@@ -148,13 +151,13 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
             onClick={cancelarYcerrar}
             className="px-6 py-3 rounded-xl font-bold text-custom-text/50 hover:bg-white/5 hover:text-custom-text transition-all"
           >
-            Cancelar
+            {t("modals.config.btn_cancelar")}
           </button>
           <button
             onClick={botonGuardar}
             className="px-8 py-3 rounded-xl font-bold text-white bg-neutral static-gradiente shadow-lg hover:scale-105 active:scale-95 transition-all"
           >
-            {configAEditar ? "Actualizar" : "Crear Modo"}
+            {configAEditar ? t("modals.config.btn_actualizar") : t("modals.config.btn_crear")}
           </button>
         </div>
       </div>

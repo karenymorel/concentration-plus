@@ -66,5 +66,50 @@
     "grafico_activos": "Días más Activos",
     "grafico_promedio": "Promedio por Sesión (Min)",
     "dias": "Lun,Mar,Mié,Jue,Vie,Sáb,Dom"
+  },
+  "timer": {
+    "sin_configuracion_titulo": "No hay pomodoro activo",
+    "sin_configuracion_desc": "El reloj de la configuración seleccionada aparecerá acá.",
+    "ciclo": "CICLO #",
+    "modos": {
+      "trabajo": "TRABAJO",
+      "descanso_corto": "DESCANSO CORTO",
+      "descanso_largo": "DESCANSO LARGO"
+    },
+    "notificaciones": {
+      "sigue_asi": "¡Seguí así!",
+      "trabajo_fin": "¡Excelente trabajo! Descanso largo.",
+      "descanso_corto_fin": "¡Buen enfoque! Descanso corto.",
+      "descanso_fin": "¡Fin del descanso! A trabajar."
+    },
+    "stop": {
+      "titulo": "¿Detener sesión completa?",
+      "desc": "Se guardará el tiempo parcial en el historial.",
+      "confirmar": "Sí, detener",
+      "cancelar": "No, continuar",
+      "exito": "Sesión detenida y guardada en el historial"
+    }
+  },
+  "modals": {
+    "config": {
+      "titulo_editar": "Editar Configuración",
+      "titulo_nuevo": "Nueva Configuración",
+      "nombre_label": "Nombre del modo",
+      "nombre_placeholder": "Ej: Super Focus...",
+      "nombre_error": "El nombre es obligatorio.",
+      "trabajo_label": "Trabajo (min)",
+      "descanso_corto_label": "D. Corto (min)",
+      "descanso_largo_label": "D. Largo (min)",
+      "ciclos_label": "Ciclos p/ Largo",
+      "btn_actualizar": "Actualizar",
+      "btn_crear": "Crear Modo",
+      "btn_cancelar": "Cancelar"
+    },
+    "eliminar": {
+      "titulo": "¿Estás segura?",
+      "desc": "Estás a punto de eliminar el modo",
+      "desc_undo": "Esta acción no se puede deshacer.",
+      "btn_confirmar": "Sí, Eliminar"
+    }
   }
 }

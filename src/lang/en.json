@@ -68,5 +68,50 @@
     "grafico_activos": "Most Active Days",
     "grafico_promedio": "Average per Session (Min)",
     "dias": "Mon,Tue,Wed,Thu,Fri,Sat,Sun"
+  },
+  "timer": {
+    "sin_configuracion_titulo": "No active pomodoro",
+    "sin_configuracion_desc": "The clock for the selected configuration will appear here.",
+    "ciclo": "CYCLE #",
+    "modos": {
+      "trabajo": "WORK",
+      "descanso_corto": "SHORT BREAK",
+      "descanso_largo": "LONG BREAK"
+    },
+    "notificaciones": {
+      "sigue_asi": "Keep it up!",
+      "trabajo_fin": "Great job! Long break.",
+      "descanso_corto_fin": "Good focus! Short break.",
+      "descanso_fin": "Break over! Back to work."
+    },
+    "stop": {
+      "titulo": "Stop full session?",
+      "desc": "Partial time will be saved in history.",
+      "confirmar": "Yes, stop",
+      "cancelar": "No, continue",
+      "exito": "Session stopped and saved in history"
+    }
+  },
+  "modals": {
+    "config": {
+      "titulo_editar": "Edit Configuration",
+      "titulo_nuevo": "New Configuration",
+      "nombre_label": "Mode name",
+      "nombre_placeholder": "e.g. Super Focus...",
+      "nombre_error": "Name is required.",
+      "trabajo_label": "Work (min)",
+      "descanso_corto_label": "Short Break (min)",
+      "descanso_largo_label": "Long Break (min)",
+      "ciclos_label": "Cycles for Long",
+      "btn_actualizar": "Update",
+      "btn_crear": "Create Mode",
+      "btn_cancelar": "Cancel"
+    },
+    "eliminar": {
+      "titulo": "Are you sure?",
+      "desc": "You are about to delete the mode",
+      "desc_undo": "This action cannot be undone.",
+      "btn_confirmar": "Yes, Delete"
+    }
   }
 }
