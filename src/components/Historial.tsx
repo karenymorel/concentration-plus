@@ -8,7 +8,7 @@ export default function Historial() {
   const historial = useConfigStore((state) => state.historial);
   const eliminarRegistro = useConfigStore((state) => state.eliminarRegistro);
   const editarRegistro = useConfigStore((state) => state.editarRegistro);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const historialAgrupado = historial.reduce(
     (acumulador, registro) => {
@@ -24,7 +24,7 @@ export default function Historial() {
   const formatearFecha = (fechaISO: string) => {
     const [year, month, day] = fechaISO.split("-");
     const fecha = new Date(Number(year), Number(month) - 1, Number(day));
-    return fecha.toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" }).toUpperCase();
+    return fecha.toLocaleDateString(i18n.language, { weekday: "long", day: "numeric", month: "long" }).toUpperCase();
   };
 
   return (
@@ -33,13 +33,13 @@ export default function Historial() {
         <h2 className="text-4xl font-bold text-custom-text">{t("historial.titulo")}</h2>
         <div className="bg-custom-sidebar px-4 py-2 rounded-xl border border-white/5 shadow-md">
           <span className="text-[#EC4166] font-bold">{historial.length}</span>{" "}
-          <span className="text-custom-text/60">Registros Totales</span>
+          <span className="text-custom-text/60">{t("historial.registros_totales")}</span>
         </div>
       </div>
 
       {historial.length === 0 ? (
         <div className="bg-custom-sidebar p-10 rounded-3xl border border-white/5 shadow-xl text-center w-full max-w-5xl mt-10 shrink-0">
-          <p className="text-custom-text/40 italic text-lg">Aún no hay sesiones registradas.</p>
+          <p className="text-custom-text/40 italic text-lg">{t("historial.sin_registros")}</p>
         </div>
       ) : (
         <div className="w-full max-w-5xl space-y-10">
@@ -57,11 +57,11 @@ export default function Historial() {
                 <table className="table w-full text-custom-text text-left">
                   <thead>
                     <tr className="border-b border-white/5 text-custom-text/50 uppercase text-xs">
-                      <th className="font-semibold">Modo</th>
-                      <th className="font-semibold">Estado</th>
-                      <th className="font-semibold">Estudio (Min)</th>
-                      <th className="font-semibold">Descanso (Min)</th>
-                      <th className="font-semibold text-right">Acciones</th>
+                      <th className="font-semibold">{t("historial.tabla.modo")}</th>
+                      <th className="font-semibold">{t("historial.tabla.estado")}</th>
+                      <th className="font-semibold">{t("historial.tabla.estudio")}</th>
+                      <th className="font-semibold">{t("historial.tabla.descanso")}</th>
+                      <th className="font-semibold text-right">{t("historial.tabla.acciones")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -76,11 +76,11 @@ export default function Historial() {
                           <td>
                             {registro.completado ? (
                               <span className="flex items-center gap-2 text-green-500 text-sm font-medium">
-                                <FaCheckCircle /> Completado
+                                <FaCheckCircle /> {t("historial.estado.completado")}
                               </span>
                             ) : (
                               <span className="flex items-center gap-2 text-yellow-500 text-sm font-medium">
-                                <FaTimesCircle /> Abortado
+                                <FaTimesCircle /> {t("historial.estado.abortado")}
                               </span>
                             )}
                           </td>
@@ -93,12 +93,12 @@ export default function Historial() {
                             <button
                               onClick={() => {
                                 const nuevosMins = window.prompt(
-                                  "Editar tiempo de estudio (minutos):",
+                                  t("historial.acciones.editar_prompt"),
                                   registro.minutos.toString(),
                                 );
                                 if (nuevosMins && !isNaN(Number(nuevosMins))) {
                                   editarRegistro(registro.id, Number(nuevosMins));
-                                  toast.success("Registro actualizado");
+                                  toast.success(t("historial.acciones.actualizado"));
                                 }
                               }}
                               className="p-3 rounded-xl bg-custom-bg text-custom-text/50 hover:text-[#72c1d9] border border-white/5 transition-all"
@@ -108,13 +108,13 @@ export default function Historial() {
                             </button>
                             <button
                               onClick={() => {
-                                toast.error("¿Borrar este registro?", {
-                                  description: "Se restará de tus estadísticas globales.",
+                                toast.error(t("historial.acciones.borrar_confirmar"), {
+                                  description: t("historial.acciones.borrar_desc"),
                                   action: {
-                                    label: "Sí, borrar",
+                                    label: t("historial.acciones.borrar_si"),
                                     onClick: () => {
                                       eliminarRegistro(registro.id);
-                                      toast.success("Registro eliminado");
+                                      toast.success(t("historial.acciones.borrar_exito"));
                                     },
                                   },
                                   cancel: { label: "Cancelar", onClick: () => toast.dismiss() },

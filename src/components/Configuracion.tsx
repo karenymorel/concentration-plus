@@ -1,13 +1,17 @@
 import { useConfigStore } from "../store/useConfigStore";
 import { FaBell, FaVolumeUp } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export default function Configuracion() {
   const { sonidoHabilitado, notificacionesHabilitadas, toggleSonido, toggleNotificaciones } = useConfigStore();
+  const { t } = useTranslation();
 
   return (
     <section className="flex flex-col items-center w-full h-full p-8 animate-fade-in bg-custom-bg">
       <div className="w-full max-w-2xl bg-custom-sidebar rounded-3xl shadow-2xl border border-white/5 p-8 mt-10">
-        <h2 className="text-3xl font-bold text-custom-text mb-8 border-b border-white/10 pb-4">Ajustes Generales ⚙️</h2>
+        <h2 className="text-3xl font-bold text-custom-text mb-8 border-b border-white/10 pb-4">
+          {t("configuracion.titulo")}
+        </h2>
 
         <div className="space-y-6">
           {/* OPCIÓN 1: SONIDO */}
@@ -17,8 +21,8 @@ export default function Configuracion() {
                 <FaVolumeUp size={24} />
               </div>
               <div>
-                <h3 className="font-bold text-lg text-custom-text">Sonido de Alarma</h3>
-                <p className="text-sm text-custom-text/60">Reproducir sonido al finalizar.</p>
+                <h3 className="font-bold text-lg text-custom-text">{t("configuracion.sonido_titulo")} </h3>
+                <p className="text-sm text-custom-text/60">{t("configuracion.sonido_desc")}</p>
               </div>
             </div>
             <input
@@ -40,8 +44,8 @@ export default function Configuracion() {
                 <FaBell size={24} />
               </div>
               <div>
-                <h3 className="font-bold text-lg text-custom-text">Notificaciones</h3>
-                <p className="text-sm text-custom-text/60">Alertas nativas del sistema.</p>
+                <h3 className="font-bold text-lg text-custom-text">{t("configuracion.notif_titulo")}</h3>
+                <p className="text-sm text-custom-text/60">{t("configuracion.notif_desc")}</p>
               </div>
             </div>
             <input

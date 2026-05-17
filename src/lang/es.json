@@ -21,5 +21,36 @@
     "eventos_hoy": "Eventos de Hoy",
     "sin_eventos": "No hay eventos para hoy.",
     "todo_el_dia": "Todo el día"
+  },
+  "configuracion": {
+    "titulo": "Ajustes Generales",
+    "sonido_titulo": "Sonido de Alarma",
+    "sonido_desc": "Reproducir sonido al finalizar.",
+    "notif_titulo": "Notificaciones",
+    "notif_desc": "Alertas nativas del sistema."
+  },
+  "historial": {
+    "titulo": "Historial de Sesiones",
+    "registros_totales": "Registros Totales",
+    "sin_registros": "Aún no hay sesiones registradas.",
+    "tabla": {
+      "modo": "Modo",
+      "estado": "Estado",
+      "estudio": "Estudio (Min)",
+      "descanso": "Descanso (Min)",
+      "acciones": "Acciones"
+    },
+    "estado": {
+      "completado": "Completado",
+      "abortado": "Abortado"
+    },
+    "acciones": {
+      "editar_prompt": "Editar tiempo de estudio (minutos):",
+      "actualizado": "Registro actualizado",
+      "borrar_confirmar": "¿Borrar este registro?",
+      "borrar_desc": "Se restará de tus estadísticas globales.",
+      "borrar_si": "Sí, borrar",
+      "borrar_exito": "Registro eliminado"
+    }
   }
 }

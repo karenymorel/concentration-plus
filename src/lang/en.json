@@ -23,5 +23,36 @@
     "eventos_hoy": "Today's Events",
     "sin_eventos": "No events for today.",
     "todo_el_dia": "All day"
+  },
+  "configuracion": {
+    "titulo": "General Settings",
+    "sonido_titulo": "Alarm Sound",
+    "sonido_desc": "Play sound when finished.",
+    "notif_titulo": "Notifications",
+    "notif_desc": "Native system alerts."
+  },
+  "historial": {
+    "titulo": "Session History",
+    "registros_totales": "Total Records",
+    "sin_registros": "No sessions recorded yet.",
+    "tabla": {
+      "modo": "Mode",
+      "estado": "Status",
+      "estudio": "Study (Min)",
+      "descanso": "Break (Min)",
+      "acciones": "Actions"
+    },
+    "estado": {
+      "completado": "Completed",
+      "abortado": "Aborted"
+    },
+    "acciones": {
+      "editar_prompt": "Edit study time (minutes):",
+      "actualizado": "Record updated",
+      "borrar_confirmar": "Delete this record?",
+      "borrar_desc": "It will be subtracted from your global stats.",
+      "borrar_si": "Yes, delete",
+      "borrar_exito": "Record deleted"
+    }
   }
 }
