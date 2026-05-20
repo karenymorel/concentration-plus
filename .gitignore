@@ -26,3 +26,6 @@ dist-ssr
 .aider*
 .env
 .env*
+
+electron
+dist-electron

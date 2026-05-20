@@ -22,18 +22,18 @@ function App() {
   useEffect(() => {
     const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
 
-    if (!isDemoMode) {
-      // Modo NO demo: asegurarse de que el store esté completamente vacío
-      if (listaConfiguraciones.length > 0) {
-        useConfigStore.setState({
-          listaConfiguraciones: [],
-          configActiva: null,
-          historial: [],
-        });
-        localStorage.removeItem("pomodoro-config-storage");
-      }
-      return;
-    }
+    // if (!isDemoMode) {
+    //   // Modo NO demo: asegurarse de que el store esté completamente vacío
+    //   if (listaConfiguraciones.length > 0) {
+    //     useConfigStore.setState({
+    //       listaConfiguraciones: [],
+    //       configActiva: null,
+    //       historial: [],
+    //     });
+    //     localStorage.removeItem("pomodoro-config-storage");
+    //   }
+    //   return;
+    // }
 
     // Modo demo: cargar datos demo solo si no existen o están vacíos
     if (isDemoMode && listaConfiguraciones.length === 0) {

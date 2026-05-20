@@ -96,7 +96,7 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
           <div className="flex gap-4">
             <div className="flex flex-col gap-2 w-1/2">
               <label className="text-xs font-bold text-custom-text/40 uppercase tracking-wider ml-1">
-                {t("modals.config.trabajo_label")} (min)
+                {t("modals.config.trabajo_label")}
               </label>
               <input
                 type="number"
@@ -107,7 +107,7 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
             </div>
             <div className="flex flex-col gap-2 w-1/2">
               <label className="text-xs font-bold text-custom-text/40 uppercase tracking-wider ml-1">
-                {t("modals.config.descanso_corto_label")} (min)
+                {t("modals.config.descanso_corto_label")}
               </label>
               <input
                 type="number"
@@ -122,7 +122,7 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
           <div className="flex gap-4">
             <div className="flex flex-col gap-2 w-1/2">
               <label className="text-xs font-bold text-custom-text/40 uppercase tracking-wider ml-1">
-                {t("modals.config.descanso_largo_label")} (min)
+                {t("modals.config.descanso_largo_label")}
               </label>
               <input
                 type="number"
