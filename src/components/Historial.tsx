@@ -56,7 +56,7 @@ export default function Historial() {
               <div className="overflow-x-auto">
                 <table className="table w-full text-custom-text text-left">
                   <thead>
-                    <tr className="border-b border-white/5 text-custom-text/50 uppercase text-xs">
+                    <tr className="border-b border-white/5 text-custom-text uppercase text-xs">
                       <th className="font-semibold">{t("historial.tabla.modo")}</th>
                       <th className="font-semibold">{t("historial.tabla.estado")}</th>
                       <th className="font-semibold">{t("historial.tabla.estudio")}</th>

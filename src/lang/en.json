@@ -113,5 +113,25 @@
       "desc_undo": "This action cannot be undone.",
       "btn_confirmar": "Yes, Delete"
     }
+  },
+  "confirmaciones": {
+    "cambiar_modo": {
+      "titulo": "Switch mode?",
+      "desc": "A session is currently in progress. If you change the settings, the timer will stop.",
+      "confirmar": "Yes, switch",
+      "cancelar": "No, continue"
+    },
+    "editar_activo": {
+      "titulo": "Edit active settings?",
+      "desc": "You are modifying the mode you are currently using. The timer will stop.",
+      "confirmar": "Yes, edit",
+      "cancelar": "Cancel"
+    },
+    "reiniciar_bloque": {
+      "titulo": "Reset timer?",
+      "desc": "The progress of the current block will be cleared and it will return to the initial time.",
+      "confirmar": "Yes, reset",
+      "cancelar": "No, keep"
+    }
   }
 }

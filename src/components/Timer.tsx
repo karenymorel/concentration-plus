@@ -18,17 +18,20 @@ export default function Timer({ configuracion }: TimerProps) {
 
   const [ciclos, setCiclos] = useState(0);
   const [tiempoSobra, setTiempoSobra] = useState(configuracion ? configuracion.tiempo_trabajo * 60 : 0);
-  const [estaActivo, setEstaActivo] = useState(false);
+  const estaActivo = useConfigStore((state) => state.estaActivo);
+  const setEstaActivo = useConfigStore((state) => state.setEstaActivo);
   const guardarRegistro = useConfigStore((state) => state.guardarRegistro);
   const googleAccessToken = useConfigStore((state) => state.googleAccessToken);
   const sonidoHabilitado = useConfigStore((state) => state.sonidoHabilitado);
   const notificacionesHabilitadas = useConfigStore((state) => state.notificacionesHabilitadas);
   const modo = useConfigStore((state) => state.modo);
   const setModo = useConfigStore((state) => state.setModo);
+  const setSesionEnCurso = useConfigStore((state) => state.setSesionEnCurso);
 
   useEffect(() => {
     if (!configuracion) return;
     setEstaActivo(false);
+    setSesionEnCurso(false);
     setModo("trabajo");
     setTiempoSobra(configuracion.tiempo_trabajo * 60);
     setCiclos(0);
@@ -111,6 +114,9 @@ export default function Timer({ configuracion }: TimerProps) {
   };
 
   const botonPlayPausa = () => {
+    if (!estaActivo) {
+      setSesionEnCurso(true);
+    }
     if (!estaActivo && "Notification" in window && Notification.permission === "default" && notificacionesHabilitadas) {
       Notification.requestPermission();
     }
@@ -118,8 +124,22 @@ export default function Timer({ configuracion }: TimerProps) {
   };
 
   const botonReset = () => {
-    setEstaActivo(false);
-    setTiempoSobra(obtenerTiempoTotal());
+    toast.warning(t("confirmaciones.reiniciar_bloque.titulo"), {
+      description: t("confirmaciones.reiniciar_bloque.desc"),
+      action: {
+        label: t("confirmaciones.reiniciar_bloque.confirmar"),
+        onClick: () => {
+          setEstaActivo(false);
+          setTiempoSobra(obtenerTiempoTotal());
+          toast.dismiss();
+          setSesionEnCurso(false);
+        },
+      },
+      cancel: {
+        label: t("confirmaciones.reiniciar_bloque.cancelar"),
+        onClick: () => toast.dismiss(),
+      },
+    });
   };
 
   const botonStop = () => {
@@ -127,7 +147,7 @@ export default function Timer({ configuracion }: TimerProps) {
     setEstaActivo(false);
 
     toast.warning(t("timer.stop.titulo"), {
-      description: "Se guardará el tiempo parcial en el historial.",
+      description: t("timer.stop.desc"),
       duration: Infinity,
       action: {
         label: t("timer.stop.confirmar"),
@@ -147,6 +167,7 @@ export default function Timer({ configuracion }: TimerProps) {
           setTiempoSobra(tiempo_trabajo);
           setCiclos(0);
           toast.error(t("timer.stop.exito"));
+          setSesionEnCurso(false);
         },
       },
       cancel: {

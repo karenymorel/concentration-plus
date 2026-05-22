@@ -8,6 +8,7 @@ import { useConfigStore } from "../store/useConfigStore";
 import { ConfigPomodoro } from "../models/ConfigPomodoro";
 import IdiomaToggle from "./IdiomaToggle";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 export default function Sidebar() {
   const { t } = useTranslation();
@@ -30,14 +31,37 @@ export default function Sidebar() {
   const [configParaEditar, setConfigParaEditar] = useState<ConfigPomodoro | null>(null);
   const [configParaEliminar, setConfigParaEliminar] = useState<ConfigPomodoro | null>(null);
 
+  const setEstaActivo = useConfigStore((state) => state.setEstaActivo);
+  const sesionEnCurso = useConfigStore((state) => state.sesionEnCurso);
+  const setSesionEnCurso = useConfigStore((state) => state.setSesionEnCurso);
+
   const abrirParaNuevo = () => {
     setConfigParaEditar(null);
     setModalAbierto(true);
   };
 
   const abrirParaEditar = (config: ConfigPomodoro) => {
-    setConfigParaEditar(config);
-    setModalAbierto(true);
+    if (config.id === configActiva?.id && sesionEnCurso) {
+      toast.warning(t("confirmaciones.editar_activo.titulo"), {
+        description: t("confirmaciones.editar_activo.desc"),
+        action: {
+          label: t("confirmaciones.editar_activo.confirmar"),
+          onClick: () => {
+            setEstaActivo(false);
+            setSesionEnCurso(false);
+            setConfigParaEditar(config);
+            setModalAbierto(true);
+          },
+        },
+        cancel: {
+          label: t("confirmaciones.editar_activo.cancelar"),
+          onClick: () => toast.dismiss(),
+        },
+      });
+    } else {
+      setConfigParaEditar(config);
+      setModalAbierto(true);
+    }
   };
 
   const abrirParaEliminar = (config: ConfigPomodoro) => {
@@ -50,6 +74,27 @@ export default function Sidebar() {
       editarConfiguracion(config);
     } else {
       agregarConfiguracion(config);
+    }
+  };
+
+  const manejarCambioConfig = (config: ConfigPomodoro) => {
+    if (sesionEnCurso && config.id !== configActiva?.id) {
+      toast.warning(t("confirmaciones.cambiar_modo.titulo"), {
+        description: t("confirmaciones.cambiar_modo.desc"),
+        action: {
+          label: t("confirmaciones.cambiar_modo.confirmar"),
+          onClick: () => {
+            setEstaActivo(false);
+            setConfigActiva(config);
+          },
+        },
+        cancel: {
+          label: t("confirmaciones.cambiar_modo.cancelar"),
+          onClick: () => toast.dismiss(),
+        },
+      });
+    } else {
+      setConfigActiva(config);
     }
   };
 
@@ -67,7 +112,7 @@ export default function Sidebar() {
           {listaConfiguraciones.map((config) => (
             <div
               key={config.id}
-              onClick={() => setConfigActiva(config)}
+              onClick={() => manejarCambioConfig(config)}
               className={`flex-shrink-0 flex justify-between items-center px-4 py-2 md:px-5 md:py-4 rounded-full md:rounded-[1.2rem] cursor-pointer transition-all border
                 ${
                   configActiva?.id === config.id

@@ -10,6 +10,10 @@ interface ConfigState {
   agregarConfiguracion: (config: ConfigPomodoro) => void;
   eliminarConfiguracion: (id: string) => void;
   editarConfiguracion: (configModificada: ConfigPomodoro) => void;
+  estaActivo: boolean;
+  setEstaActivo: (activo: boolean) => void;
+  sesionEnCurso: boolean;
+  setSesionEnCurso: (enCurso: boolean) => void;
 
   historial: RegistroPomodoro[];
   guardarRegistro: (datos: Omit<RegistroPomodoro, "id" | "fecha">) => void;
@@ -110,6 +114,12 @@ export const useConfigStore = create<ConfigState>()(
 
       modo: "trabajo",
       setModo: (modo) => set({ modo }),
+
+      sesionEnCurso: false,
+      setSesionEnCurso: (enCurso) => set({ sesionEnCurso: enCurso }),
+
+      estaActivo: false,
+      setEstaActivo: (activo) => set({ estaActivo: activo }),
 
       guardarRegistro: (datos) => {
         const hoy = new Date().toISOString().split("T")[0];

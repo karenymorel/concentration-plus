@@ -111,5 +111,25 @@
       "desc_undo": "Esta acción no se puede deshacer.",
       "btn_confirmar": "Sí, Eliminar"
     }
+  },
+  "confirmaciones": {
+    "cambiar_modo": {
+      "titulo": "¿Cambiar de modo?",
+      "desc": "Hay una sesión en curso. Si cambiás la configuración, el temporizador se detendrá.",
+      "confirmar": "Sí, cambiar",
+      "cancelar": "No, seguir"
+    },
+    "editar_activo": {
+      "titulo": "¿Editar configuración activa?",
+      "desc": "Estás modificando el modo que estás usando ahora. El reloj se detendrá.",
+      "confirmar": "Sí, editar",
+      "cancelar": "Cancelar"
+    },
+    "reiniciar_bloque": {
+      "titulo": "¿Reiniciar temporizador?",
+      "desc": "Se borrará el progreso del bloque actual y volverá al tiempo inicial.",
+      "confirmar": "Sí, reiniciar",
+      "cancelar": "No, mantener"
+    }
   }
 }
