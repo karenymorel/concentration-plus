@@ -136,7 +136,9 @@ export default function Estadisticas() {
 
         {/* GRÁFICO 3: DONUT (DISTRIBUCIÓN) */}
         <div className="bg-custom-sidebar p-6 rounded-3xl shadow-xl border border-white/5">
-          <h3 className="text-xl font-bold text-custom-text/80 mb-2 text-center">Días más Activos</h3>
+          <h3 className="text-xl font-bold text-custom-text/80 mb-2 text-center">
+            {t("estadisticas.grafico_activos")}
+          </h3>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>

@@ -197,7 +197,7 @@ export default function Timer({ configuracion }: TimerProps) {
       <div className="flex flex-col items-center mt-8 md:mt-0">
         <h2
           className={`text-4xl md:text-6xl font-bold uppercase tracking-widest transition-colors duration-500 text-center
-          ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`}
+          ${modo === "trabajo" ? "text-[#EC4166]" : modo === "descanso_corto" ? "text-[#72c1d9]" : "text-[#6a81f2]"}`}
         >
           {t(`timer.modos.${modo}`)}
         </h2>
@@ -219,6 +219,10 @@ export default function Timer({ configuracion }: TimerProps) {
               <stop offset="0%" stopColor="#72c1d9" />
               <stop offset="100%" stopColor="#4a9fb8" />
             </linearGradient>
+            <linearGradient id="gradienteDescansoLargo" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#6a81f2" />
+              <stop offset="100%" stopColor="#3347a0" />
+            </linearGradient>
           </defs>
 
           {/* Carril de fondo */}
@@ -230,7 +234,13 @@ export default function Timer({ configuracion }: TimerProps) {
             cy="200"
             r={radio}
             fill="none"
-            stroke={modo === "trabajo" ? "url(#gradienteTrabajo)" : "url(#gradienteDescanso)"}
+            stroke={
+              modo === "trabajo"
+                ? "url(#gradienteTrabajo)"
+                : modo === "descanso_corto"
+                  ? "url(#gradienteDescanso)"
+                  : "url(#gradienteDescansoLargo)"
+            }
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             strokeDasharray={circunferencia}
@@ -240,7 +250,9 @@ export default function Timer({ configuracion }: TimerProps) {
               filter:
                 modo === "trabajo"
                   ? "drop-shadow(0 0 12px rgba(236, 65, 102, 0.5))"
-                  : "drop-shadow(0 0 12px rgba(114, 193, 217, 0.5))",
+                  : modo === "descanso_corto"
+                    ? "drop-shadow(0 0 12px rgba(114, 193, 217, 0.5))"
+                    : "drop-shadow(0 0 12px rgba(114, 193, 217,0.5))",
             }}
           />
         </svg>
@@ -269,7 +281,7 @@ export default function Timer({ configuracion }: TimerProps) {
           {estaActivo ? (
             <FaPause
               size={28}
-              className={`md:w-[32px] md:h-[32px] ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`}
+              className={`md:w-[32px] md:h-[32px] ${modo === "trabajo" ? "text-[#EC4166]" : modo === "descanso_corto" ? "text-[#72c1d9]" : "text-[#6a81f2]"}`}
             />
           ) : (
             <FaPlay
