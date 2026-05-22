@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* MODO DIA */
+/* DAY MODE */
 :root,
 [data-app-mode="dia"] {
   --bg-app: #f8f7f7;
@@ -11,7 +11,7 @@
   --primary-color: #ec4166;
 }
 
-/* MODO NOCHE - AQUÍ ESTÁN TUS COLORES EXACTOS */
+/* NIGHT MODE */
 [data-app-mode="noche"] {
   --bg-app: #111;
   --bg-side: #0d0d0d;
@@ -19,7 +19,6 @@
   --primary-color: #ec4166;
 }
 
-/* Aplicamos los colores globalmente */
 body {
   background-color: var(--bg-app);
   color: var(--text-app);

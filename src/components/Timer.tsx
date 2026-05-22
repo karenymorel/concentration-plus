@@ -25,7 +25,6 @@ export default function Timer({ configuracion }: TimerProps) {
   const tiempo_corto_descanso = configuracion.tiempo_corto_descanso * 60;
   const tiempo_largo_descanso = configuracion.tiempo_largo_descanso * 60;
 
-  const [modo, setModo] = useState<"trabajo" | "descanso_corto" | "descanso_largo">("trabajo");
   const [ciclos, setCiclos] = useState(0);
   const [tiempoSobra, setTiempoSobra] = useState(tiempo_trabajo);
   const [estaActivo, setEstaActivo] = useState(false);
@@ -34,6 +33,8 @@ export default function Timer({ configuracion }: TimerProps) {
   const googleAccessToken = useConfigStore((state) => state.googleAccessToken);
   const sonidoHabilitado = useConfigStore((state) => state.sonidoHabilitado);
   const notificacionesHabilitadas = useConfigStore((state) => state.notificacionesHabilitadas);
+  const modo = useConfigStore((state) => state.modo);
+  const setModo = useConfigStore((state) => state.setModo);
 
   // --- MATEMÁTICAS DEL SVG ---
   const radio = 160;

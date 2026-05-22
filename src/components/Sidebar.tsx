@@ -22,6 +22,9 @@ export default function Sidebar() {
 
   const pantallaActual = useConfigStore((state) => state.pantallaActual);
   const setPantallaActual = useConfigStore((state) => state.setPantallaActual);
+  const modo = useConfigStore((state) => state.modo);
+  const colorAcento = modo === "trabajo" ? "#EC4166" : modo === "descanso_corto" ? "#72c1d9" : "#6a81f2";
+
   const [modalAbierto, setModalAbierto] = useState(false);
   const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false);
   const [configParaEditar, setConfigParaEditar] = useState<ConfigPomodoro | null>(null);
@@ -119,18 +122,21 @@ export default function Sidebar() {
             onClick={() => setPantallaActual("reloj")}
           >
             <div
+              style={{ backgroundColor: pantallaActual === "reloj" ? colorAcento : "" }}
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${
-                pantallaActual === "reloj"
-                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
-                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
-              }`}
+      ${
+        pantallaActual === "reloj"
+          ? "text-white shadow-lg"
+          : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+      }`}
             >
               <FiClock className="w-5 h-5 md:w-[26px] md:h-[26px]" />
             </div>
+
             <h3
+              style={{ color: pantallaActual === "reloj" ? colorAcento : "" }}
               className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
-                pantallaActual === "reloj" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+                pantallaActual === "reloj" ? "md:text-custom-text" : "text-custom-text/40"
               }`}
             >
               {t("sidebar.timer")}
@@ -143,18 +149,25 @@ export default function Sidebar() {
             onClick={() => setPantallaActual("calendario")}
           >
             <div
+              style={{
+                backgroundColor: pantallaActual === "calendario" ? colorAcento : "",
+              }}
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${
-                pantallaActual === "calendario"
-                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
-                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
-              }`}
+      ${
+        pantallaActual === "calendario"
+          ? "text-white shadow-lg"
+          : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+      }`}
             >
               <FiCalendar className="w-5 h-5 md:w-[26px] md:h-[26px]" />
             </div>
+
             <h3
+              style={{
+                color: pantallaActual === "calendario" ? colorAcento : "",
+              }}
               className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
-                pantallaActual === "calendario" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+                pantallaActual === "calendario" ? "md:text-custom-text" : "text-custom-text/40"
               }`}
             >
               {t("sidebar.calendar")}
@@ -167,18 +180,25 @@ export default function Sidebar() {
             onClick={() => setPantallaActual("estadisticas")}
           >
             <div
+              style={{
+                backgroundColor: pantallaActual === "estadisticas" ? colorAcento : "",
+              }}
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${
-                pantallaActual === "estadisticas"
-                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
-                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
-              }`}
+      ${
+        pantallaActual === "estadisticas"
+          ? "text-white shadow-lg"
+          : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+      }`}
             >
               <MdAutoGraph className="w-6 h-6 md:w-[26px] md:h-[26px]" />
             </div>
+
             <h3
+              style={{
+                color: pantallaActual === "estadisticas" ? colorAcento : "",
+              }}
               className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
-                pantallaActual === "estadisticas" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+                pantallaActual === "estadisticas" ? "md:text-custom-text" : "text-custom-text/40"
               }`}
             >
               {t("sidebar.stats")}
@@ -191,18 +211,25 @@ export default function Sidebar() {
             onClick={() => setPantallaActual("historial")}
           >
             <div
+              style={{
+                backgroundColor: pantallaActual === "historial" ? colorAcento : "",
+              }}
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${
-                pantallaActual === "historial"
-                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
-                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
-              }`}
+      ${
+        pantallaActual === "historial"
+          ? "text-white shadow-lg"
+          : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+      }`}
             >
               <FaClipboardList className="w-5 h-5 md:w-[26px] md:h-[26px]" />
             </div>
+
             <h3
+              style={{
+                color: pantallaActual === "historial" ? colorAcento : "",
+              }}
               className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
-                pantallaActual === "historial" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+                pantallaActual === "historial" ? "md:text-custom-text" : "text-custom-text/40"
               }`}
             >
               {t("sidebar.history")}
@@ -215,18 +242,25 @@ export default function Sidebar() {
             onClick={() => setPantallaActual("configuracion")}
           >
             <div
+              style={{
+                backgroundColor: pantallaActual === "configuracion" ? colorAcento : "",
+              }}
               className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300
-              ${
-                pantallaActual === "configuracion"
-                  ? "bg-[#EC4166] text-white shadow-[0_0_15px_rgba(236,65,102,0.4)]"
-                  : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
-              }`}
+      ${
+        pantallaActual === "configuracion"
+          ? "text-white shadow-lg"
+          : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"
+      }`}
             >
               <FiSettings className="w-5 h-5 md:w-[26px] md:h-[26px]" />
             </div>
+
             <h3
+              style={{
+                color: pantallaActual === "configuracion" ? colorAcento : "",
+              }}
               className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${
-                pantallaActual === "configuracion" ? "text-[#EC4166] md:text-custom-text" : "text-custom-text/40"
+                pantallaActual === "configuracion" ? "md:text-custom-text" : "text-custom-text/40"
               }`}
             >
               {t("sidebar.settings")}

@@ -97,7 +97,7 @@
       "titulo_editar": "Edit Configuration",
       "titulo_nuevo": "New Configuration",
       "nombre_label": "Mode name",
-      "nombre_placeholder": "e.g. Super Focus...",
+      "nombre_placeholder": "e.g. Pomodoro 25/5",
       "nombre_error": "Name is required.",
       "trabajo_label": "Work (min)",
       "descanso_corto_label": "Short Break (min)",

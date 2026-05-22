@@ -29,6 +29,9 @@ interface ConfigState {
   toggleTheme: () => void;
   setIdioma: (idioma: "es" | "en") => void;
   idioma: "en" | "es";
+
+  modo: "trabajo" | "descanso_corto" | "descanso_largo";
+  setModo: (modo: "trabajo" | "descanso_corto" | "descanso_largo") => void;
 }
 
 // Datos de demostración (solo si VITE_DEMO_MODE === "true")
@@ -104,6 +107,9 @@ export const useConfigStore = create<ConfigState>()(
       listaConfiguraciones: isDemoMode ? DEMO_PRESETS : [],
       configActiva: isDemoMode ? DEMO_PRESETS[0] : null,
       historial: isDemoMode ? DEMO_HISTORIAL : [],
+
+      modo: "trabajo",
+      setModo: (modo) => set({ modo }),
 
       guardarRegistro: (datos) => {
         const hoy = new Date().toISOString().split("T")[0];

@@ -100,9 +100,10 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
               </label>
               <input
                 type="number"
+                step="1"
                 className="w-full px-4 py-3 rounded-xl bg-custom-bg text-custom-text border border-white/5 focus:border-[#EC4166]/50 outline-none transition-all"
                 value={trabajo}
-                onChange={(e) => setTrabajo(Number(e.target.value))}
+                onChange={(e) => setTrabajo(Math.floor(Number(e.target.value)))}
               />
             </div>
             <div className="flex flex-col gap-2 w-1/2">
@@ -111,9 +112,10 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
               </label>
               <input
                 type="number"
+                step="1"
                 className="w-full px-4 py-3 rounded-xl bg-custom-bg text-custom-text border border-white/5 focus:border-[#EC4166]/50 outline-none transition-all"
                 value={descansoCorto}
-                onChange={(e) => setDescansoCorto(Number(e.target.value))}
+                onChange={(e) => setDescansoCorto(Math.floor(Number(e.target.value)))}
               />
             </div>
           </div>
@@ -126,9 +128,10 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
               </label>
               <input
                 type="number"
+                step="1"
                 className="w-full px-4 py-3 rounded-xl bg-custom-bg text-custom-text border border-white/5 focus:border-[#EC4166]/50 outline-none transition-all"
                 value={descansoLargo}
-                onChange={(e) => setDescansoLargo(Number(e.target.value))}
+                onChange={(e) => setDescansoLargo(Math.floor(Number(e.target.value)))}
               />
             </div>
             <div className="flex flex-col gap-2 w-1/2">
@@ -137,9 +140,10 @@ export default function ModalConfig({ estaAbierto, cerrarModal, alGuardar, confi
               </label>
               <input
                 type="number"
+                step="1"
                 className="w-full px-4 py-3 rounded-xl bg-custom-bg text-custom-text border border-white/5 focus:border-[#EC4166]/50 outline-none transition-all"
                 value={ciclos}
-                onChange={(e) => setCiclos(Number(e.target.value))}
+                onChange={(e) => setCiclos(Math.floor(Number(e.target.value)))}
               />
             </div>
           </div>
