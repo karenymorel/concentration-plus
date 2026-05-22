@@ -12,6 +12,45 @@ interface TimerProps {
 export default function Timer({ configuracion }: TimerProps) {
   const { t } = useTranslation();
 
+  const tiempo_trabajo = configuracion ? configuracion.tiempo_trabajo * 60 : 0;
+  const tiempo_corto_descanso = configuracion ? configuracion.tiempo_corto_descanso * 60 : 0;
+  const tiempo_largo_descanso = configuracion ? configuracion.tiempo_largo_descanso * 60 : 0;
+
+  const [ciclos, setCiclos] = useState(0);
+  const [tiempoSobra, setTiempoSobra] = useState(configuracion ? configuracion.tiempo_trabajo * 60 : 0);
+  const [estaActivo, setEstaActivo] = useState(false);
+  const guardarRegistro = useConfigStore((state) => state.guardarRegistro);
+  const googleAccessToken = useConfigStore((state) => state.googleAccessToken);
+  const sonidoHabilitado = useConfigStore((state) => state.sonidoHabilitado);
+  const notificacionesHabilitadas = useConfigStore((state) => state.notificacionesHabilitadas);
+  const modo = useConfigStore((state) => state.modo);
+  const setModo = useConfigStore((state) => state.setModo);
+
+  useEffect(() => {
+    if (!configuracion) return;
+    setEstaActivo(false);
+    setModo("trabajo");
+    setTiempoSobra(configuracion.tiempo_trabajo * 60);
+    setCiclos(0);
+  }, [configuracion]);
+
+  useEffect(() => {
+    let interval: number | null = null;
+    if (estaActivo && tiempoSobra > 0) {
+      interval = window.setInterval(() => {
+        setTiempoSobra((prevTime) => prevTime - 1);
+      }, 1000);
+    } else if (estaActivo && tiempoSobra === 0) {
+      if (sonidoHabilitado) {
+        new Audio("/sounds/notification_01.mp3").play().catch(() => {});
+      }
+      cambiarModoAutomaticamente();
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [estaActivo, tiempoSobra]);
+
   if (!configuracion) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center p-8">
@@ -20,21 +59,6 @@ export default function Timer({ configuracion }: TimerProps) {
       </div>
     );
   }
-
-  const tiempo_trabajo = configuracion.tiempo_trabajo * 60;
-  const tiempo_corto_descanso = configuracion.tiempo_corto_descanso * 60;
-  const tiempo_largo_descanso = configuracion.tiempo_largo_descanso * 60;
-
-  const [ciclos, setCiclos] = useState(0);
-  const [tiempoSobra, setTiempoSobra] = useState(tiempo_trabajo);
-  const [estaActivo, setEstaActivo] = useState(false);
-
-  const guardarRegistro = useConfigStore((state) => state.guardarRegistro);
-  const googleAccessToken = useConfigStore((state) => state.googleAccessToken);
-  const sonidoHabilitado = useConfigStore((state) => state.sonidoHabilitado);
-  const notificacionesHabilitadas = useConfigStore((state) => state.notificacionesHabilitadas);
-  const modo = useConfigStore((state) => state.modo);
-  const setModo = useConfigStore((state) => state.setModo);
 
   // --- MATEMÁTICAS DEL SVG ---
   const radio = 160;
@@ -85,13 +109,6 @@ export default function Timer({ configuracion }: TimerProps) {
       console.error("Error GCal:", error);
     }
   };
-
-  useEffect(() => {
-    setEstaActivo(false);
-    setModo("trabajo");
-    setTiempoSobra(configuracion.tiempo_trabajo * 60);
-    setCiclos(0);
-  }, [configuracion]);
 
   const botonPlayPausa = () => {
     if (!estaActivo && "Notification" in window && Notification.permission === "default" && notificacionesHabilitadas) {
@@ -173,23 +190,6 @@ export default function Timer({ configuracion }: TimerProps) {
       enviarNotificacion("¡Fin del descanso! A trabajar. 🚀");
     }
   };
-
-  useEffect(() => {
-    let interval: number | null = null;
-    if (estaActivo && tiempoSobra > 0) {
-      interval = window.setInterval(() => {
-        setTiempoSobra((prevTime) => prevTime - 1);
-      }, 1000);
-    } else if (estaActivo && tiempoSobra === 0) {
-      if (sonidoHabilitado) {
-        new Audio("/sounds/notification_01.mp3").play().catch(() => {});
-      }
-      cambiarModoAutomaticamente();
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [estaActivo, tiempoSobra]);
 
   return (
     <section className="flex flex-col justify-center items-center gap-4 md:gap-8 w-full min-h-full bg-custom-bg transition-colors duration-300 p-4 md:p-6">
