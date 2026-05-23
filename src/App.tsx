@@ -70,7 +70,7 @@ function App() {
 
       useConfigStore.setState({ historial: historialDemo });
     }
-  }, [listaConfiguraciones, agregarConfiguracion, setConfigActiva]);
+  }, []);
 
   useEffect(() => {
     i18n.changeLanguage(idioma);
