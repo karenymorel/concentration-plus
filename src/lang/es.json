@@ -29,7 +29,9 @@
     "sonido_titulo": "Sonido de Alarma",
     "sonido_desc": "Reproducir sonido al finalizar.",
     "notif_titulo": "Notificaciones",
-    "notif_desc": "Alertas nativas del sistema."
+    "notif_desc": "Alertas nativas del sistema.",
+    "idioma_titulo": "Idioma",
+    "idioma_desc": "Selecciona el idioma de la aplicación."
   },
   "historial": {
     "titulo": "Historial de Sesiones",

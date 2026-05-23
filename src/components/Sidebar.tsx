@@ -6,7 +6,6 @@ import ModalConfig from "./ModalConfig";
 import ModalEliminar from "./ModalEliminar";
 import { useConfigStore } from "../store/useConfigStore";
 import { ConfigPomodoro } from "../models/ConfigPomodoro";
-import IdiomaToggle from "./IdiomaToggle";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
@@ -100,11 +99,8 @@ export default function Sidebar() {
 
   return (
     <section className="flex flex-col h-full p-2 md:p-8 bg-custom-sidebar transition-colors duration-300 overflow-y-auto overflow-x-hidden scrollbar-thin">
-      {/* 1. CONTENEDOR DE NAVEGACIÓN (Arriba en Desktop, Abajo en Mobile) */}
+      {/* 1. CONTENEDOR DE NAVEGACIÓN */}
       <div className="order-2 md:order-1 w-full border-t border-white/5 md:border-none pt-2 md:pt-0 flex-shrink-0">
-        <div className="hidden md:flex justify-center mb-6">
-          <IdiomaToggle />
-        </div>
         <ul className="flex flex-row md:flex-col justify-around md:justify-start w-full md:space-y-6 mt-1 md:mt-4">
           {/* BOTÓN: Reloj */}
           <li

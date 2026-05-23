@@ -9,7 +9,6 @@ import Configuracion from "./components/Configuracion";
 import Historial from "./components/Historial";
 import { Toaster } from "sonner";
 import { useTranslation } from "react-i18next";
-import IdiomaToggle from "./components/IdiomaToggle";
 
 function App() {
   const configActiva = useConfigStore((state) => state.configActiva);
@@ -22,19 +21,6 @@ function App() {
 
   useEffect(() => {
     const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
-
-    // if (!isDemoMode) {
-    //   // Modo NO demo: asegurarse de que el store esté completamente vacío
-    //   if (listaConfiguraciones.length > 0) {
-    //     useConfigStore.setState({
-    //       listaConfiguraciones: [],
-    //       configActiva: null,
-    //       historial: [],
-    //     });
-    //     localStorage.removeItem("pomodoro-config-storage");
-    //   }
-    //   return;
-    // }
 
     // Modo demo: cargar datos demo solo si no existen o están vacíos
     if (isDemoMode && listaConfiguraciones.length === 0) {
@@ -100,9 +86,6 @@ function App() {
         <div
           className={`flex items-center gap-4 justify-end pt-4 pr-5 md:pr-6 flex-shrink-0 z-50 ${pantallaActual === "reloj" ? "absolute top-0 right-0" : "w-full pb-4"}`}
         >
-          <div className="block md:hidden">
-            <IdiomaToggle />
-          </div>
           <ThemeToggle />
         </div>
 

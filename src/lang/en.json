@@ -31,7 +31,9 @@
     "sonido_titulo": "Alarm Sound",
     "sonido_desc": "Play sound when finished.",
     "notif_titulo": "Notifications",
-    "notif_desc": "Native system alerts."
+    "notif_desc": "Native system alerts.",
+    "idioma_titulo": "Language",
+    "idioma_desc": "Select the application language."
   },
   "historial": {
     "titulo": "Session History",

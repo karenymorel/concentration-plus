@@ -1,6 +1,7 @@
 import { useConfigStore } from "../store/useConfigStore";
-import { FaBell, FaVolumeUp } from "react-icons/fa";
+import { FaBell, FaVolumeUp, FaGlobe } from "react-icons/fa"; // Agregamos FaGlobe
 import { useTranslation } from "react-i18next";
+import IdiomaToggle from "./IdiomaToggle"; // Importamos tu selector de idiomas
 
 export default function Configuracion() {
   const { sonidoHabilitado, notificacionesHabilitadas, toggleSonido, toggleNotificaciones } = useConfigStore();
@@ -58,6 +59,23 @@ export default function Configuracion() {
               checked={notificacionesHabilitadas}
               onChange={toggleNotificaciones}
             />
+          </div>
+
+          {/* OPCIÓN 3: IDIOMA */}
+          <div className="flex items-center justify-between p-4 bg-custom-bg rounded-2xl border border-white/5">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-[#6a81f2]/10 text-[#6a81f2] rounded-xl flex items-center justify-center">
+                <FaGlobe size={24} />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-custom-text">{t("configuracion.idioma_titulo")}</h3>
+                <p className="text-sm text-custom-text/60">{t("configuracion.idioma_desc")}</p>
+              </div>
+            </div>
+
+            <div className="flex-shrink-0">
+              <IdiomaToggle />
+            </div>
           </div>
         </div>
       </div>
