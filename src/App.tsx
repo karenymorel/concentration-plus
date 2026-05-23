@@ -17,6 +17,7 @@ function App() {
   const agregarConfiguracion = useConfigStore((state) => state.agregarConfiguracion);
   const setConfigActiva = useConfigStore((state) => state.setConfigActiva);
   const idioma = useConfigStore((state) => state.idioma);
+  const theme = useConfigStore((state) => state.theme);
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -75,6 +76,10 @@ function App() {
   useEffect(() => {
     i18n.changeLanguage(idioma);
   }, [idioma, i18n]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-app-mode", theme);
+  }, [theme]);
 
   return (
     <main className="flex flex-col-reverse md:flex-row h-[100dvh] md:h-screen w-full text-custom-text bg-custom-bg transition-colors duration-300 overflow-hidden">
