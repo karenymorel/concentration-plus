@@ -29,4 +29,5 @@ dist-ssr
 
 electron
 dist-electron
+dist_electron
 release

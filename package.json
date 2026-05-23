@@ -1,8 +1,9 @@
 {
   "name": "concentration-plus",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": "Karen Morel <karenym@proton.me>",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -40,5 +41,21 @@
     "vite-plugin-electron": "^0.28.6",
     "vite-plugin-electron-renderer": "^0.14.5"
   },
-  "main": "dist-electron/main.js"
+  "main": "dist-electron/main.js",
+  "build": {
+    "appId": "com.tuusuario.concentrationplus",
+    "productName": "Concentration Plus",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "public/favicon/concentration_plus_icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "Concentration Plus"
+    }
+  }
 }
