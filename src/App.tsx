@@ -9,6 +9,7 @@ import Configuracion from "./components/Configuracion";
 import Historial from "./components/Historial";
 import { Toaster } from "sonner";
 import { useTranslation } from "react-i18next";
+import IdiomaToggle from "./components/IdiomaToggle";
 
 function App() {
   const configActiva = useConfigStore((state) => state.configActiva);
@@ -90,32 +91,40 @@ function App() {
   }, [idioma, i18n]);
 
   return (
-    <main className="flex flex-col-reverse md:flex-row min-h-[100dvh] md:h-screen w-full text-custom-text bg-custom-bg transition-colors duration-300">
-      <section className="w-full md:w-80 h-auto md:h-full z-10 bg-custom-sidebar border-t md:border-t-0 md:border-r border-white/5 flex-shrink-0">
+    <main className="flex flex-col-reverse md:flex-row h-[100dvh] md:h-screen w-full text-custom-text bg-custom-bg transition-colors duration-300 overflow-hidden">
+      <section className="w-full md:w-80 h-auto md:h-full z-10 bg-custom-sidebar border-t md:border-t-0 md:border-r border-white/5 flex-shrink-0 flex flex-col">
         <Sidebar />
       </section>
 
-      <section className="flex-1 flex flex-col h-full relative">
-        <div className="flex justify-end p-2 flex-shrink-0 absolute top-0 right-0 z-50">
+      <section className="flex-1 flex flex-col h-full relative min-w-0 min-h-0">
+        <div
+          className={`flex items-center gap-4 justify-end pt-4 pr-5 md:pr-6 flex-shrink-0 z-50 ${pantallaActual === "reloj" ? "absolute top-0 right-0" : "w-full pb-4"}`}
+        >
+          <div className="block md:hidden">
+            <IdiomaToggle />
+          </div>
           <ThemeToggle />
         </div>
 
-        <div className="flex-1 overflow-visible md:overflow-y-auto w-full h-full relative">
-          <div
-            className={`h-full w-full flex items-center justify-center py-10 md:py-0 ${pantallaActual === "reloj" ? "block" : "hidden"}`}
-          >
-            <Timer configuracion={configActiva} />
+        <div
+          className={`flex-1 w-full h-full relative scrollbar-thin ${pantallaActual === "reloj" ? "overflow-hidden" : "overflow-y-auto overflow-x-hidden"}`}
+        >
+          <div className={`h-full w-full ${pantallaActual === "reloj" ? "flex flex-col" : "hidden"}`}>
+            <div className="flex-1 w-full h-full flex flex-col items-center justify-center p-2">
+              <Timer configuracion={configActiva} />
+            </div>
           </div>
-          <div className={`h-full w-full ${pantallaActual === "estadisticas" ? "block" : "hidden"}`}>
+
+          <div className={`min-h-full w-full ${pantallaActual === "estadisticas" ? "block" : "hidden"}`}>
             <Estadisticas />
           </div>
-          <div className={`h-full w-full ${pantallaActual === "calendario" ? "block" : "hidden"}`}>
+          <div className={`min-h-full w-full ${pantallaActual === "calendario" ? "block" : "hidden"}`}>
             <Calendario />
           </div>
-          <div className={`h-full w-full ${pantallaActual === "configuracion" ? "block" : "hidden"}`}>
+          <div className={`min-h-full w-full ${pantallaActual === "configuracion" ? "block" : "hidden"}`}>
             <Configuracion />
           </div>
-          <div className={`h-full w-full ${pantallaActual === "historial" ? "block" : "hidden"}`}>
+          <div className={`min-h-full w-full ${pantallaActual === "historial" ? "block" : "hidden"}`}>
             <Historial />
           </div>
         </div>

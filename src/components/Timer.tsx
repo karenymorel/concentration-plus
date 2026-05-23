@@ -213,23 +213,20 @@ export default function Timer({ configuracion }: TimerProps) {
   };
 
   return (
-    <section className="flex flex-col justify-center items-center gap-4 md:gap-8 w-full min-h-full bg-custom-bg transition-colors duration-300 p-4 md:p-6">
-      {/* TÍTULOS RESPONSIVOS */}
-      <div className="flex flex-col items-center mt-8 md:mt-0">
+    <section className="flex flex-col justify-center items-center gap-[clamp(1rem,4vmin,2.5rem)] w-full h-full max-h-full overflow-hidden bg-transparent">
+      <div className="flex flex-col items-center flex-shrink-0">
         <h2
-          className={`text-4xl md:text-6xl font-bold uppercase tracking-widest transition-colors duration-500 text-center
+          className={`font-bold uppercase tracking-widest transition-colors duration-500 text-center text-[clamp(1.8rem,5vmin,4rem)]
           ${modo === "trabajo" ? "text-[#EC4166]" : modo === "descanso_corto" ? "text-[#72c1d9]" : "text-[#6a81f2]"}`}
         >
           {t(`timer.modos.${modo}`)}
         </h2>
-        <span className="text-sm md:text-lg font-semibold text-custom-text opacity-60 mt-1 md:mt-2">
+        <span className="font-semibold text-custom-text opacity-60 mt-1 text-[clamp(0.875rem,2vmin,1.25rem)]">
           {t("timer.ciclo")} {ciclos + 1}
         </span>
       </div>
 
-      {/* RELOJ RESPONSIVO */}
-      {/* En móvil: w-72 h-72 (288px). En PC: w-[25rem] h-[25rem] (400px) */}
-      <div className="relative flex items-center justify-center w-72 h-72 md:w-[25rem] md:h-[25rem] my-4 md:my-0">
+      <div className="relative flex items-center justify-center w-[clamp(14rem,48vmin,28rem)] h-[clamp(14rem,48vmin,28rem)] flex-shrink-0 my-2">
         <svg className="w-full h-full drop-shadow-2xl" viewBox="0 0 400 400" style={{ transform: "rotate(-90deg)" }}>
           <defs>
             <linearGradient id="gradienteTrabajo" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -246,10 +243,9 @@ export default function Timer({ configuracion }: TimerProps) {
             </linearGradient>
           </defs>
 
-          {/* Carril de fondo */}
           <circle cx="200" cy="200" r={radio} fill="none" className="stroke-white/5" strokeWidth={strokeWidth} />
 
-          {/* Círculo de progreso (Neón) */}
+          {/* Círculo de progreso */}
           <circle
             cx="200"
             cy="200"
@@ -278,45 +274,43 @@ export default function Timer({ configuracion }: TimerProps) {
           />
         </svg>
 
-        {/* Texto del tiempo central responsivo */}
+        {/* Texto del tiempo - Max 7rem (antes 6rem) */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-6xl md:text-8xl text-custom-text font-extralight tracking-tighter">
+          <span className="text-custom-text font-extralight tracking-tighter text-[clamp(3.5rem,12vmin,7rem)]">
             {formatoTiempo(tiempoSobra)}
           </span>
         </div>
       </div>
 
-      {/* 🔘 BOTONES RESPONSIVOS */}
-      <div className="flex gap-6 md:gap-10 items-center mt-2">
+      {/* 🔘 BOTONES FLUIDOS */}
+      <div className="flex items-center gap-[clamp(1rem,4vmin,2.5rem)] flex-shrink-0 mt-2">
         <button
           onClick={botonReset}
-          className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-custom-text hover:scale-110 transition-all border border-white/5"
+          className="flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-custom-text hover:scale-110 transition-all border border-white/5 w-[clamp(3rem,9vmin,4.5rem)] h-[clamp(3rem,9vmin,4.5rem)]"
         >
-          <FaUndoAlt size={20} className="md:w-[24px] md:h-[24px]" />
+          <FaUndoAlt className="w-[clamp(1.2rem,3vmin,1.6rem)] h-[clamp(1.2rem,3vmin,1.6rem)]" />
         </button>
 
         <button
           onClick={botonPlayPausa}
-          className="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center rounded-full bg-custom-sidebar border border-white/10 hover:scale-110 transition-all shadow-2xl"
+          className="flex items-center justify-center rounded-full bg-custom-sidebar border border-white/10 hover:scale-110 transition-all shadow-2xl w-[clamp(4.5rem,13vmin,7rem)] h-[clamp(4.5rem,13vmin,7rem)]"
         >
           {estaActivo ? (
             <FaPause
-              size={28}
-              className={`md:w-[32px] md:h-[32px] ${modo === "trabajo" ? "text-[#EC4166]" : modo === "descanso_corto" ? "text-[#72c1d9]" : "text-[#6a81f2]"}`}
+              className={`w-[clamp(1.5rem,5.5vmin,2.2rem)] h-[clamp(1.5rem,5.5vmin,2.2rem)] ${modo === "trabajo" ? "text-[#EC4166]" : modo === "descanso_corto" ? "text-[#72c1d9]" : "text-[#6a81f2]"}`}
             />
           ) : (
             <FaPlay
-              size={28}
-              className={`ml-2 md:w-[32px] md:h-[32px] ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`}
+              className={`ml-[clamp(0.2rem,1vmin,0.5rem)] w-[clamp(1.5rem,5.5vmin,2.2rem)] h-[clamp(1.5rem,5.5vmin,2.2rem)] ${modo === "trabajo" ? "text-[#EC4166]" : "text-[#72c1d9]"}`}
             />
           )}
         </button>
 
         <button
           onClick={botonStop}
-          className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-red-500 hover:scale-110 transition-all border border-white/5"
+          className="flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-red-500 hover:scale-110 transition-all border border-white/5 w-[clamp(3rem,9vmin,4.5rem)] h-[clamp(3rem,9vmin,4.5rem)]"
         >
-          <FaStop size={20} className="md:w-[24px] md:h-[24px]" />
+          <FaStop className="w-[clamp(1.2rem,3vmin,1.6rem)] h-[clamp(1.2rem,3vmin,1.6rem)]" />
         </button>
       </div>
     </section>

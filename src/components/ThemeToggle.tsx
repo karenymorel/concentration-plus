@@ -9,7 +9,6 @@ export default function ThemeToggle() {
       className="swap swap-rotate w-12 h-12 rounded-2xl flex items-center justify-center bg-custom-sidebar border border-white/5 shadow-lg cursor-pointer hover:scale-110 active:scale-95 transition-all duration-300 group"
       title={theme === "noche" ? "Cambiar a modo día" : "Cambiar a modo noche"}
     >
-      {/* Input oculto que controla el estado */}
       <input type="checkbox" className="hidden" onChange={toggleTheme} checked={theme === "noche"} />
 
       {/* ICONO SOL (Aparece cuando NO es noche) */}
