@@ -4,7 +4,6 @@ import Timer from "./components/Timer";
 import Estadisticas from "./components/Estadisticas";
 import ThemeToggle from "./components/ThemeToggle";
 import { useConfigStore } from "./store/useConfigStore";
-import Calendario from "./components/Calendario";
 import Configuracion from "./components/Configuracion";
 import Historial from "./components/Historial";
 import { Toaster } from "sonner";
@@ -105,9 +104,6 @@ function App() {
 
           <div className={`min-h-full w-full ${pantallaActual === "estadisticas" ? "block" : "hidden"}`}>
             <Estadisticas />
-          </div>
-          <div className={`min-h-full w-full ${pantallaActual === "calendario" ? "block" : "hidden"}`}>
-            <Calendario />
           </div>
           <div className={`min-h-full w-full ${pantallaActual === "configuracion" ? "block" : "hidden"}`}>
             <Configuracion />

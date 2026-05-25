@@ -21,7 +21,6 @@ export default function Timer({ configuracion }: TimerProps) {
   const estaActivo = useConfigStore((state) => state.estaActivo);
   const setEstaActivo = useConfigStore((state) => state.setEstaActivo);
   const guardarRegistro = useConfigStore((state) => state.guardarRegistro);
-  const googleAccessToken = useConfigStore((state) => state.googleAccessToken);
   const sonidoHabilitado = useConfigStore((state) => state.sonidoHabilitado);
   const notificacionesHabilitadas = useConfigStore((state) => state.notificacionesHabilitadas);
   const modo = useConfigStore((state) => state.modo);
@@ -86,30 +85,6 @@ export default function Timer({ configuracion }: TimerProps) {
     if (!notificacionesHabilitadas) return;
     if ("Notification" in window && Notification.permission === "granted") {
       new Notification("Concentration PLUS", { body: mensaje });
-    }
-  };
-
-  // GOOGLE CALENDAR
-  const guardarEnGoogleCalendar = async () => {
-    if (!googleAccessToken) return;
-    const fechaFin = new Date();
-    const fechaInicio = new Date(fechaFin.getTime() - configuracion.tiempo_trabajo * 60000);
-
-    const eventoGCal = {
-      summary: `🍅 Pomodoro: ${configuracion.nombre}`,
-      description: "Sesión de enfoque completada.",
-      start: { dateTime: fechaInicio.toISOString(), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-      end: { dateTime: fechaFin.toISOString(), timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone },
-    };
-
-    try {
-      await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${googleAccessToken}`, "Content-Type": "application/json" },
-        body: JSON.stringify(eventoGCal),
-      });
-    } catch (error) {
-      console.error("Error GCal:", error);
     }
   };
 
@@ -193,8 +168,6 @@ export default function Timer({ configuracion }: TimerProps) {
         completado: true,
         nombreModo: configuracion.nombre,
       });
-
-      guardarEnGoogleCalendar();
 
       if (esDescansoLargo) {
         setModo("descanso_largo");

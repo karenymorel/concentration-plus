@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiSettings, FiCalendar, FiClock, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiSettings, FiClock, FiEdit2, FiTrash2 } from "react-icons/fi";
 import { MdAutoGraph } from "react-icons/md";
 import { FaClipboardList } from "react-icons/fa";
 import ModalConfig from "./ModalConfig";
@@ -118,25 +118,6 @@ export default function Sidebar() {
               className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${pantallaActual === "reloj" ? "md:text-custom-text" : "text-custom-text/40"}`}
             >
               {t("sidebar.timer")}
-            </h3>
-          </li>
-
-          {/* BOTÓN: Calendario */}
-          <li
-            className="flex flex-col md:flex-row items-center gap-1 md:gap-4 cursor-pointer group"
-            onClick={() => setPantallaActual("calendario")}
-          >
-            <div
-              style={{ backgroundColor: pantallaActual === "calendario" ? colorAcento : "" }}
-              className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300 ${pantallaActual === "calendario" ? "text-white shadow-lg" : "bg-transparent md:bg-custom-bg text-custom-text/50 group-hover:bg-custom-bg/80"}`}
-            >
-              <FiCalendar className="w-5 h-5 md:w-[26px] md:h-[26px]" />
-            </div>
-            <h3
-              style={{ color: pantallaActual === "calendario" ? colorAcento : "" }}
-              className={`font-bold text-[10px] md:text-xl tracking-wide transition-colors ${pantallaActual === "calendario" ? "md:text-custom-text" : "text-custom-text/40"}`}
-            >
-              {t("sidebar.calendar")}
             </h3>
           </li>
 

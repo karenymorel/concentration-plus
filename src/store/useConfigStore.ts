@@ -20,11 +20,9 @@ interface ConfigState {
   eliminarRegistro: (id: string) => void;
   editarRegistro: (id: string, nuevosMinutos: number) => void;
 
-  pantallaActual: "reloj" | "estadisticas" | "calendario" | "configuracion" | "historial";
-  setPantallaActual: (pantalla: "reloj" | "estadisticas" | "calendario" | "configuracion" | "historial") => void;
+  pantallaActual: "reloj" | "estadisticas" | "configuracion" | "historial";
+  setPantallaActual: (pantalla: "reloj" | "estadisticas" | "configuracion" | "historial") => void;
 
-  googleAccessToken: string | null;
-  setGoogleAccessToken: (token: string | null) => void;
   sonidoHabilitado: boolean;
   notificacionesHabilitadas: boolean;
   toggleSonido: () => void;
@@ -156,8 +154,6 @@ export const useConfigStore = create<ConfigState>()(
       pantallaActual: "reloj",
       setPantallaActual: (pantalla) => set({ pantallaActual: pantalla }),
       setConfigActiva: (config) => set({ configActiva: config }),
-      googleAccessToken: null,
-      setGoogleAccessToken: (token) => set({ googleAccessToken: token }),
 
       agregarConfiguracion: (nuevaConfig) =>
         set((state) => ({

@@ -10,21 +10,10 @@
   },
   "sidebar": {
     "timer": "Timer",
-    "calendar": "Calendar",
     "stats": "Statistics",
     "history": "History",
     "settings": "Settings",
     "new_preset": "NEW PRESET"
-  },
-  "calendario": {
-    "titulo": "Calendar",
-    "desconectar": "Disconnect",
-    "google_titulo": "Google Calendar",
-    "google_desc": "Connect your account to sync your pomodoros.",
-    "google_boton": "Connect with Google",
-    "eventos_hoy": "Today's Events",
-    "sin_eventos": "No events for today.",
-    "todo_el_dia": "All day"
   },
   "configuracion": {
     "titulo": "General Settings",

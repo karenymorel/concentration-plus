@@ -1,6 +1,6 @@
 # 💎 Concentration PLUS – Pomodoro Timer
 
-Aplicación Pomodoro moderna con estadísticas, historial, calendario y sincronización con Google Calendar.  
+Aplicación Pomodoro moderna con estadísticas e historial.  
 Desarrollada con **React + TypeScript + Zustand + TailwindCSS**.
 
 ### LINK DEMO: https://concentration-plus.vercel.app/
@@ -10,11 +10,9 @@ Desarrollada con **React + TypeScript + Zustand + TailwindCSS**.
 - ⏱️ **Temporizador Pomodoro** con animación SVG circular y modos: trabajo, descanso corto, descanso largo.
 - 📊 **Estadísticas** dinámicas: gráficos de progreso diario/semanal/mensual.
 - 📜 **Historial** de sesiones: registra cada pomodoro completado o abortado, con fecha, duración y estado.
-- 📅 **Calendario** visual para ver tu actividad día a día.
 - ⚙️ **Configuraciones personalizables**: crea, edita y elimina tus propios preajustes (duración de trabajo/descanso, ciclos).
 - 🌙 **Modo claro / oscuro** (día/noche) que persiste en el almacenamiento local.
 - 🔔 **Notificaciones** y sonidos al finalizar cada sesión.
-- 🔗 **Integración con Google Calendar** (opcional): guarda automáticamente los pomodoros completados como eventos.
 - 📱 **Diseño 100% responsivo**: funciona perfectamente en celualres, tablets y escritorio.
 - 💾 **Persistencia de datos** con Zustand + localStorage: tu configuración e historial nunca se pierden.
 
@@ -40,11 +38,12 @@ Con false o sin la variable, la aplicación inicia sin datos.
 - React Icons
 - Sonner
 - Recharts
-- Google Calendar API
 - Vite (entorno de desarrollo y build)
 
 ## 📄 Licencia
+
 Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 ## ✍️ Autor
-Karen Morel – @karenymorel 
+
+Karen Morel – @karenymorel
