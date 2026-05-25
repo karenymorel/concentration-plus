@@ -69,9 +69,9 @@
     },
     "notificaciones": {
       "sigue_asi": "¡Seguí así!",
-      "trabajo_fin": "¡Excelente trabajo! Descanso largo.",
-      "descanso_corto_fin": "¡Buen enfoque! Descanso corto.",
-      "descanso_fin": "¡Fin del descanso! A trabajar."
+      "descanso_largo_empieza": "🟪 ¡Excelente trabajo! Descanso largo. 🟪",
+      "descanso_corto_empieza": "🟦 ¡Buen enfoque! Descanso corto. 🟦",
+      "descanso_fin": "🟥 ¡Fin del descanso! A trabajar. 🟥"
     },
     "stop": {
       "titulo": "¿Detener sesión completa?",

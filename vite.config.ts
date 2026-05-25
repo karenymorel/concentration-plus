@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
   const electronMainExists = fs.existsSync(path.join(__dirname, "electron/main.ts"));
 
   return {
+    base: "./",
     plugins: [
       react(),
       ...(electronMainExists

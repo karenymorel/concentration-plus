@@ -71,9 +71,9 @@
     },
     "notificaciones": {
       "sigue_asi": "Keep it up!",
-      "trabajo_fin": "Great job! Long break.",
-      "descanso_corto_fin": "Good focus! Short break.",
-      "descanso_fin": "Break over! Back to work."
+      "descanso_largo_empieza": "🟪 Great job! Long break.🟪",
+      "descanso_corto_empieza": "🟦 Good focus! Short break. 🟦",
+      "descanso_fin": "🟥 Break over! Back to work. 🟥"
     },
     "stop": {
       "titulo": "Stop full session?",

@@ -26,6 +26,7 @@ export default function Timer({ configuracion }: TimerProps) {
   const modo = useConfigStore((state) => state.modo);
   const setModo = useConfigStore((state) => state.setModo);
   const setSesionEnCurso = useConfigStore((state) => state.setSesionEnCurso);
+  const [audioAlarma, setAudioAlarma] = useState<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (!configuracion) return;
@@ -37,21 +38,38 @@ export default function Timer({ configuracion }: TimerProps) {
   }, [configuracion]);
 
   useEffect(() => {
+    const rutaAudio = "./sounds/notification_01.mp3";
+    console.log("Intentando cargar audio desde:", rutaAudio);
+
+    const audio = new Audio(rutaAudio);
+    audio.load();
+    setAudioAlarma(audio);
+  }, []);
+
+  useEffect(() => {
     let interval: number | null = null;
+
     if (estaActivo && tiempoSobra > 0) {
       interval = window.setInterval(() => {
         setTiempoSobra((prevTime) => prevTime - 1);
       }, 1000);
     } else if (estaActivo && tiempoSobra === 0) {
-      if (sonidoHabilitado) {
-        new Audio("/sounds/notification_01.mp3").play().catch(() => {});
+      if (sonidoHabilitado && audioAlarma) {
+        audioAlarma.play().catch((e) => console.error("Error al sonar:", e));
       }
       cambiarModoAutomaticamente();
     }
+
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [estaActivo, tiempoSobra]);
+  }, [estaActivo, tiempoSobra, audioAlarma]);
+
+  useEffect(() => {
+    if (window.ipcRenderer) {
+      (window.ipcRenderer as any).setPowerSave(estaActivo);
+    }
+  }, [estaActivo]);
 
   if (!configuracion) {
     return (
@@ -77,20 +95,28 @@ export default function Timer({ configuracion }: TimerProps) {
   const strokeDashoffset = -((1 - porcentaje_tiempo) * circunferencia);
 
   const enviarNotificacion = (mensaje: string) => {
-    toast.success(mensaje, {
-      description: t("timer.notificaciones.sigue_asi"),
-      icon: modo === "trabajo" ? "☕" : "🚀",
-    });
-
     if (!notificacionesHabilitadas) return;
-    if ("Notification" in window && Notification.permission === "granted") {
-      new Notification("Concentration PLUS", { body: mensaje });
+
+    if (window.ipcRenderer) {
+      (window.ipcRenderer as any).sendNotification({
+        title: "Concentration PLUS",
+        body: mensaje,
+      });
     }
   };
 
   const botonPlayPausa = () => {
     if (!estaActivo) {
       setSesionEnCurso(true);
+      if (audioAlarma) {
+        audioAlarma
+          .play()
+          .then(() => {
+            audioAlarma.pause();
+            audioAlarma.currentTime = 0;
+          })
+          .catch(() => console.log("Esperando interacción para desbloquear audio..."));
+      }
     }
     if (!estaActivo && "Notification" in window && Notification.permission === "default" && notificacionesHabilitadas) {
       Notification.requestPermission();
@@ -172,16 +198,19 @@ export default function Timer({ configuracion }: TimerProps) {
       if (esDescansoLargo) {
         setModo("descanso_largo");
         setTiempoSobra(tiempo_largo_descanso);
-        enviarNotificacion("¡Excelente trabajo! Descanso largo. ☕");
+        // CAMBIO ACÁ: Usamos el traductor
+        enviarNotificacion(t("timer.notificaciones.descanso_largo_empieza"));
       } else {
         setModo("descanso_corto");
         setTiempoSobra(tiempo_corto_descanso);
-        enviarNotificacion("¡Buen enfoque! Respiro corto. 🧘");
+        // CAMBIO ACÁ: Usamos el traductor
+        enviarNotificacion(t("timer.notificaciones.descanso_corto_empieza"));
       }
     } else {
       setModo("trabajo");
       setTiempoSobra(tiempo_trabajo);
-      enviarNotificacion("¡Fin del descanso! A trabajar. 🚀");
+      // CAMBIO ACÁ: Usamos el traductor
+      enviarNotificacion(t("timer.notificaciones.descanso_fin"));
     }
   };
 
