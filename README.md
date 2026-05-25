@@ -1,49 +1,44 @@
-# 💎 Concentration PLUS – Pomodoro Timer
+# ⏰ Concentration Plus                                           
+                                                                   
+Concentration Plus is a Pomodoro timer designed to help you achieve deep work and maintain peak productivity. Built as
+a desktop application, it combines a minimalist aesthetic with powerful customization options to fit any workflow.               
 
-Aplicación Pomodoro moderna con estadísticas e historial.  
-Desarrollada con **React + TypeScript + Zustand + TailwindCSS**.
 
-### LINK DEMO: https://concentration-plus.vercel.app/
+<img width="1917" height="987" alt="github_release" src="https://github.com/user-attachments/assets/adb15d75-f1df-40bf-98cc-a7066591952e" />
 
-## ✨ Características
 
-- ⏱️ **Temporizador Pomodoro** con animación SVG circular y modos: trabajo, descanso corto, descanso largo.
-- 📊 **Estadísticas** dinámicas: gráficos de progreso diario/semanal/mensual.
-- 📜 **Historial** de sesiones: registra cada pomodoro completado o abortado, con fecha, duración y estado.
-- ⚙️ **Configuraciones personalizables**: crea, edita y elimina tus propios preajustes (duración de trabajo/descanso, ciclos).
-- 🌙 **Modo claro / oscuro** (día/noche) que persiste en el almacenamiento local.
-- 🔔 **Notificaciones** y sonidos al finalizar cada sesión.
-- 📱 **Diseño 100% responsivo**: funciona perfectamente en celualres, tablets y escritorio.
-- 💾 **Persistencia de datos** con Zustand + localStorage: tu configuración e historial nunca se pierden.
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
+![Electron](https://img.shields.io/badge/Electron-478BFF?style=flat&logo=electron&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+                                                                   
+## ✨ Features                                                     
+                                                                   
+- **🕒 Customizable Timer**: Create and manage multiple Pomodoro presets (Work, Short Break, Long Break) tailored to your needs. 
+- **📊 Productivity Analytics**: Track your progress with a dedicated statistics panel and a detailed session history.         
+- **🌓 Dynamic Themes**: Seamlessly switch between Light and Dark modes for comfortable working in any environment.              
+- **🌍 Multi-language Support**: Fully localized in English and Spanish.                                                         
+- **💾 Persistent Storage**: Your configurations and history are saved locally, so you never lose your progress.                 
+- **🔔 Smart Notifications**: Integrated sound and visual alerts to keep you on track without distractions.                            
+                                                                   
+## 📥 Download & Installation                                      
+                                                                   
+You can download the latest stable version of Concentration Plus directly from the **Releases** section:                                                      
 
-## 🧪 Modo demostración (demo)
+👉 **[Click here to go to Releases](https://github.com/karenymorel/concentration-plus/releases)**                                                                                                                             
+1. Download the `.exe` file for Windows.                           
+2. Run the installer and follow the on-screen instructions.        
+3. Start focusing! 🚀                                              
+                                                                   
+## 🚀 Tech Stack                                                   
+                                                                   
+- **Framework**: [React](https://reactjs.org/) with [TypeScript](https://www.typescriptlang.org/)                      
+- **Runtime**: [Electron](https://www.electronjs.org/)             
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)   
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)            
+- **Build Tool**: [Vite](https://vitejs.dev/)
 
-El proyecto incluye un **modo demo** que se activa mediante una variable de entorno.  
-En el repositorio (GitHub) la aplicación arranca **completamente vacía** (sin datos precargados), ideal para que los reclutadores vean el código base limpio.  
-En el despliegue de **Vercel** se activa el modo demo, mostrando preajustes de ejemplo y un historial de sesiones ficticio para que la experiencia de prueba sea más atractiva.
+## 📜 License                                                         
 
-Para activar el modo demo localmente, crea un archivo `.env` en la raíz:
-
-```env
-VITE_DEMO_MODE=true
-```
-
-Con false o sin la variable, la aplicación inicia sin datos.
-
-## 🛠️ Tecnologías utilizadas
-
-- React 18 + TypeScript
-- Zustand
-- TailwindCSS
-- React Icons
-- Sonner
-- Recharts
-- Vite (entorno de desarrollo y build)
-
-## 📄 Licencia
-
-Este proyecto es de código abierto y está disponible bajo la licencia MIT.
-
-## ✍️ Autor
-
-Karen Morel – @karenymorel
+This project is licensed under the MIT License.
