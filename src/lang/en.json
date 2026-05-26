@@ -2,8 +2,10 @@
   "general": {
     "app_name": "Concentration Plus",
     "save": "Save",
+    "guardar": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
+    "cancelar": "Cancelar",
     "edit": "Edit",
     "change_to_spanish": "Change to Spanish",
     "change_to_english": "Change to English"

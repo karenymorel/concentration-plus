@@ -135,7 +135,7 @@ export const useConfigStore = create<ConfigState>()(
       editarRegistro: (id, nuevosMinutos) =>
         set((state) => ({
           historial: state.historial.map((registro) =>
-            registro.id === id ? { ...registro, minutos: nuevosMinutos } : registro,
+            String(registro.id) === String(id) ? { ...registro, minutos: nuevosMinutos } : registro,
           ),
         })),
 

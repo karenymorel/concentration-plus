@@ -2,7 +2,9 @@
   "general": {
     "app_name": "Concentration Plus",
     "save": "Guardar",
+    "guardar": "Guardar",
     "cancel": "Cancelar",
+    "cancelar": "Cancelar",
     "delete": "Borrar",
     "edit": "Editar"
   },
@@ -43,7 +45,8 @@
       "borrar_confirmar": "¿Borrar este registro?",
       "borrar_desc": "Se restará de tus estadísticas globales.",
       "borrar_si": "Sí, borrar",
-      "borrar_exito": "Registro eliminado"
+      "borrar_exito": "Registro eliminado",
+      "editar_titulo": "Editar Registro"
     }
   },
   "estadisticas": {
