@@ -23,7 +23,7 @@ export default function Timer({ configuracion }: TimerProps) {
   const guardarRegistro = useConfigStore((state) => state.guardarRegistro);
   const sonidoHabilitado = useConfigStore((state) => state.sonidoHabilitado);
   const notificacionesHabilitadas = useConfigStore((state) => state.notificacionesHabilitadas);
-  const modo = useConfigStore((state) => state.modo);
+  let modo = useConfigStore((state) => state.modo);
   const setModo = useConfigStore((state) => state.setModo);
   const setSesionEnCurso = useConfigStore((state) => state.setSesionEnCurso);
   const [audioAlarma, setAudioAlarma] = useState<HTMLAudioElement | null>(null);
@@ -198,19 +198,20 @@ export default function Timer({ configuracion }: TimerProps) {
       if (esDescansoLargo) {
         setModo("descanso_largo");
         setTiempoSobra(tiempo_largo_descanso);
-        // CAMBIO ACÁ: Usamos el traductor
         enviarNotificacion(t("timer.notificaciones.descanso_largo_empieza"));
       } else {
         setModo("descanso_corto");
         setTiempoSobra(tiempo_corto_descanso);
-        // CAMBIO ACÁ: Usamos el traductor
         enviarNotificacion(t("timer.notificaciones.descanso_corto_empieza"));
       }
     } else {
       setModo("trabajo");
       setTiempoSobra(tiempo_trabajo);
-      // CAMBIO ACÁ: Usamos el traductor
       enviarNotificacion(t("timer.notificaciones.descanso_fin"));
+
+      if ((modo = "descanso_largo")) {
+        setCiclos(0);
+      }
     }
   };
 
@@ -224,7 +225,7 @@ export default function Timer({ configuracion }: TimerProps) {
           {t(`timer.modos.${modo}`)}
         </h2>
         <span className="font-semibold text-custom-text opacity-60 mt-1 text-[clamp(0.875rem,2vmin,1.25rem)]">
-          {t("timer.ciclo")} {ciclos + 1}
+          {t("timer.ciclo")} {ciclos + 1}/{configuracion.ciclos_hasta_descanso_largo}
         </span>
       </div>
 
