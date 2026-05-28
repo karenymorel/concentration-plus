@@ -64,7 +64,7 @@
   "timer": {
     "sin_configuracion_titulo": "No hay pomodoro activo",
     "sin_configuracion_desc": "El reloj de la configuración seleccionada aparecerá acá.",
-    "ciclo": "CICLO #",
+    "ciclo": "CICLO ",
     "modos": {
       "trabajo": "TRABAJO",
       "descanso_corto": "DESCANSO CORTO",

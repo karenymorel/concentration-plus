@@ -18,6 +18,7 @@ function App() {
   const idioma = useConfigStore((state) => state.idioma);
   const theme = useConfigStore((state) => state.theme);
   const { i18n } = useTranslation();
+  const estaActivo = useConfigStore((state) => state.estaActivo);
 
   useEffect(() => {
     const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
@@ -79,6 +80,30 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute("data-app-mode", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (estaActivo) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [estaActivo]);
+
+  useEffect(() => {
+    if (window.ipcRenderer) {
+      (window.ipcRenderer as any).send("set-timer-active", estaActivo);
+    }
+  }, [estaActivo]);
+
+  useEffect(() => {
+    if (window.ipcRenderer) {
+      (window.ipcRenderer as any).send("set-app-language", idioma);
+    }
+  }, [idioma]);
 
   return (
     <main className="flex flex-col-reverse md:flex-row h-[100dvh] md:h-screen w-full text-custom-text bg-custom-bg transition-colors duration-300 overflow-hidden">

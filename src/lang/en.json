@@ -65,7 +65,7 @@
   "timer": {
     "sin_configuracion_titulo": "No active pomodoro",
     "sin_configuracion_desc": "The clock for the selected configuration will appear here.",
-    "ciclo": "CYCLE #",
+    "ciclo": "CYCLE ",
     "modos": {
       "trabajo": "WORK",
       "descanso_corto": "SHORT BREAK",
