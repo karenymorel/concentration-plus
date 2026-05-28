@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaPlay, FaPause, FaStop, FaUndoAlt } from "react-icons/fa";
 import { ConfigPomodoro } from "../models/ConfigPomodoro";
 import { useConfigStore } from "../store/useConfigStore";
@@ -12,180 +12,51 @@ interface TimerProps {
 export default function Timer({ configuracion }: TimerProps) {
   const { t } = useTranslation();
 
+  // Valores base
   const tiempo_trabajo = configuracion ? configuracion.tiempo_trabajo * 60 : 0;
   const tiempo_corto_descanso = configuracion ? configuracion.tiempo_corto_descanso * 60 : 0;
   const tiempo_largo_descanso = configuracion ? configuracion.tiempo_largo_descanso * 60 : 0;
 
   const [ciclos, setCiclos] = useState(0);
   const [tiempoSobra, setTiempoSobra] = useState(configuracion ? configuracion.tiempo_trabajo * 60 : 0);
+
   const estaActivo = useConfigStore((state) => state.estaActivo);
   const setEstaActivo = useConfigStore((state) => state.setEstaActivo);
   const guardarRegistro = useConfigStore((state) => state.guardarRegistro);
   const sonidoHabilitado = useConfigStore((state) => state.sonidoHabilitado);
   const notificacionesHabilitadas = useConfigStore((state) => state.notificacionesHabilitadas);
-  let modo = useConfigStore((state) => state.modo);
+  const modo = useConfigStore((state) => state.modo);
   const setModo = useConfigStore((state) => state.setModo);
+  const sesionEnCurso = useConfigStore((state) => state.sesionEnCurso);
   const setSesionEnCurso = useConfigStore((state) => state.setSesionEnCurso);
+
   const [audioAlarma, setAudioAlarma] = useState<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    if (!configuracion) return;
-    setEstaActivo(false);
-    setSesionEnCurso(false);
-    setModo("trabajo");
-    setTiempoSobra(configuracion.tiempo_trabajo * 60);
-    setCiclos(0);
-  }, [configuracion]);
+  const tiempoSobraRef = useRef(tiempoSobra);
+  const modoRef = useRef(modo);
 
-  useEffect(() => {
-    const rutaAudio = "./sounds/notification_01.mp3";
-    console.log("Intentando cargar audio desde:", rutaAudio);
-
-    const audio = new Audio(rutaAudio);
-    audio.load();
-    setAudioAlarma(audio);
-  }, []);
-
-  useEffect(() => {
-    let interval: number | null = null;
-
-    if (estaActivo && tiempoSobra > 0) {
-      interval = window.setInterval(() => {
-        setTiempoSobra((prevTime) => prevTime - 1);
-      }, 1000);
-    } else if (estaActivo && tiempoSobra === 0) {
-      if (sonidoHabilitado && audioAlarma) {
-        audioAlarma.play().catch((e) => console.error("Error al sonar:", e));
-      }
-      cambiarModoAutomaticamente();
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [estaActivo, tiempoSobra, audioAlarma]);
-
-  useEffect(() => {
-    if (window.ipcRenderer) {
-      (window.ipcRenderer as any).setPowerSave(estaActivo);
-    }
-  }, [estaActivo]);
-
-  if (!configuracion) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full text-center p-8">
-        <h2 className="text-2xl font-bold text-custom-text/50">{t("timer.sin_configuracion_titulo")} </h2>
-        <p className="text-custom-text/30 mt-2">{t("timer.sin_configuracion_desc")}</p>
-      </div>
-    );
-  }
-
-  // --- MATEMÁTICAS DEL SVG ---
-  const radio = 160;
-  const strokeWidth = 26;
-  const circunferencia = 2 * Math.PI * radio;
-
-  const obtenerTiempoTotal = () => {
+  function obtenerTiempoTotal() {
     if (modo === "trabajo") return tiempo_trabajo;
     if (modo === "descanso_corto") return tiempo_corto_descanso;
     return tiempo_largo_descanso;
-  };
+  }
 
-  const porcentaje_tiempo = tiempoSobra / (obtenerTiempoTotal() || 1);
-  const strokeDashoffset = -((1 - porcentaje_tiempo) * circunferencia);
-
-  const enviarNotificacion = (mensaje: string) => {
+  function enviarNotificacion(mensaje: string) {
     if (!notificacionesHabilitadas) return;
-
     if (window.ipcRenderer) {
-      (window.ipcRenderer as any).sendNotification({
+      (window.ipcRenderer as any).send("send-notification", {
         title: "Concentration PLUS",
         body: mensaje,
       });
     }
-  };
+  }
 
-  const botonPlayPausa = () => {
-    if (!estaActivo) {
-      setSesionEnCurso(true);
-      if (audioAlarma) {
-        audioAlarma
-          .play()
-          .then(() => {
-            audioAlarma.pause();
-            audioAlarma.currentTime = 0;
-          })
-          .catch(() => console.log("Esperando interacción para desbloquear audio..."));
-      }
-    }
-    if (!estaActivo && "Notification" in window && Notification.permission === "default" && notificacionesHabilitadas) {
-      Notification.requestPermission();
-    }
-    setEstaActivo(!estaActivo);
-  };
+  function cambiarModoAutomaticamente() {
+    if (!configuracion) return;
 
-  const botonReset = () => {
-    toast.warning(t("confirmaciones.reiniciar_bloque.titulo"), {
-      description: t("confirmaciones.reiniciar_bloque.desc"),
-      action: {
-        label: t("confirmaciones.reiniciar_bloque.confirmar"),
-        onClick: () => {
-          setEstaActivo(false);
-          setTiempoSobra(obtenerTiempoTotal());
-          toast.dismiss();
-          setSesionEnCurso(false);
-        },
-      },
-      cancel: {
-        label: t("confirmaciones.reiniciar_bloque.cancelar"),
-        onClick: () => toast.dismiss(),
-      },
-    });
-  };
-
-  const botonStop = () => {
-    const estabaCorriendo = estaActivo;
-    setEstaActivo(false);
-
-    toast.warning(t("timer.stop.titulo"), {
-      description: t("timer.stop.desc"),
-      duration: Infinity,
-      action: {
-        label: t("timer.stop.confirmar"),
-        onClick: () => {
-          const minutosRealizados = Math.ceil((tiempo_trabajo - tiempoSobra) / 60);
-
-          if (minutosRealizados > 0 && modo === "trabajo") {
-            guardarRegistro({
-              minutos: minutosRealizados,
-              minutosDescanso: 0,
-              completado: false,
-              nombreModo: configuracion.nombre,
-            });
-          }
-
-          setModo("trabajo");
-          setTiempoSobra(tiempo_trabajo);
-          setCiclos(0);
-          toast.error(t("timer.stop.exito"));
-          setSesionEnCurso(false);
-        },
-      },
-      cancel: {
-        label: t("timer.stop.cancelar"),
-        onClick: () => {
-          if (estabaCorriendo) setEstaActivo(true);
-          toast.dismiss();
-        },
-      },
-    });
-  };
-
-  const cambiarModoAutomaticamente = () => {
     if (modo === "trabajo") {
       const nuevosCiclos = ciclos + 1;
       setCiclos(nuevosCiclos);
-
       const esDescansoLargo = nuevosCiclos % configuracion.ciclos_hasta_descanso_largo === 0;
 
       guardarRegistro({
@@ -209,18 +80,182 @@ export default function Timer({ configuracion }: TimerProps) {
       setTiempoSobra(tiempo_trabajo);
       enviarNotificacion(t("timer.notificaciones.descanso_fin"));
 
-      if ((modo = "descanso_largo")) {
+      if (modo === "descanso_largo") {
         setCiclos(0);
       }
     }
+  }
+
+  useEffect(() => {
+    if (window.ipcRenderer) {
+      (window.ipcRenderer as any).send("set-timer-active", sesionEnCurso);
+    }
+  }, [sesionEnCurso]);
+
+  console.log("ipcRenderer disponible:", window.ipcRenderer);
+
+  useEffect(() => {
+    if (!configuracion) return;
+    setEstaActivo(false);
+    setSesionEnCurso(false);
+    setModo("trabajo");
+    setTiempoSobra(configuracion.tiempo_trabajo * 60);
+    setCiclos(0);
+  }, [configuracion]);
+
+  useEffect(() => {
+    const rutaAudio = "./sounds/notification_01.mp3";
+    const audio = new Audio(rutaAudio);
+    audio.load();
+    setAudioAlarma(audio);
+  }, []);
+
+  useEffect(() => {
+    tiempoSobraRef.current = tiempoSobra;
+    modoRef.current = modo;
+  }, [tiempoSobra, modo]);
+
+  useEffect(() => {
+    let interval: number | null = null;
+    if (estaActivo && tiempoSobra > 0) {
+      interval = window.setInterval(() => {
+        setTiempoSobra((prevTime) => prevTime - 1);
+      }, 1000);
+    } else if (estaActivo && tiempoSobra === 0) {
+      if (sonidoHabilitado && audioAlarma) {
+        audioAlarma.play().catch((e) => console.error("Error al sonar:", e));
+      }
+      cambiarModoAutomaticamente();
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [estaActivo, tiempoSobra, audioAlarma]);
+
+  useEffect(() => {
+    if (!window.ipcRenderer) return;
+
+    const handler = () => {
+      const tiempoActual = tiempoSobraRef.current;
+      const modoActual = modoRef.current;
+      const tiempoTotal = obtenerTiempoTotal();
+      const minutosRealizados = Math.ceil((tiempoTotal - tiempoActual) / 60);
+
+      if (minutosRealizados > 0 && modoActual === "trabajo") {
+        guardarRegistro({
+          minutos: minutosRealizados,
+          minutosDescanso: 0,
+          completado: false,
+          nombreModo: configuracion?.nombre || "Sesión",
+        });
+      }
+    };
+
+    (window.ipcRenderer as any).on("force-save-session", handler);
+
+    return () => {
+      (window.ipcRenderer as any).removeAllListeners("force-save-session");
+    };
+  }, [guardarRegistro, configuracion]);
+
+  useEffect(() => {
+    if (window.ipcRenderer) {
+      (window.ipcRenderer as any).send("set-power-save", estaActivo);
+    }
+  }, [estaActivo]);
+
+  if (!configuracion) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full text-center p-8">
+        <h2 className="text-2xl font-bold text-custom-text/50">{t("timer.sin_configuracion_titulo")}</h2>
+        <p className="text-custom-text/30 mt-2">{t("timer.sin_configuracion_desc")}</p>
+      </div>
+    );
+  }
+
+  // --- MATEMÁTICAS DEL SVG ---
+  const radio = 160;
+  const strokeWidth = 26;
+  const circunferencia = 2 * Math.PI * radio;
+  const porcentaje_tiempo = tiempoSobra / (obtenerTiempoTotal() || 1);
+  const strokeDashoffset = -((1 - porcentaje_tiempo) * circunferencia);
+
+  // --- HANDLERS DE BOTONES ---
+  const botonPlayPausa = () => {
+    if (!estaActivo) {
+      setSesionEnCurso(true);
+      if (audioAlarma) {
+        audioAlarma
+          .play()
+          .then(() => {
+            audioAlarma.pause();
+            audioAlarma.currentTime = 0;
+          })
+          .catch(() => {});
+      }
+    }
+    if (!estaActivo && "Notification" in window && Notification.permission === "default" && notificacionesHabilitadas) {
+      Notification.requestPermission();
+    }
+    setEstaActivo(!estaActivo);
+  };
+
+  const botonReset = () => {
+    toast.warning(t("confirmaciones.reiniciar_bloque.titulo"), {
+      description: t("confirmaciones.reiniciar_bloque.desc"),
+      action: {
+        label: t("confirmaciones.reiniciar_bloque.confirmar"),
+        onClick: () => {
+          setEstaActivo(false);
+          setTiempoSobra(obtenerTiempoTotal());
+          toast.dismiss();
+          setSesionEnCurso(false);
+        },
+      },
+      cancel: { label: t("confirmaciones.reiniciar_bloque.cancelar"), onClick: () => toast.dismiss() },
+    });
+  };
+
+  const botonStop = () => {
+    const estabaCorriendo = estaActivo;
+    setEstaActivo(false);
+    toast.warning(t("timer.stop.titulo"), {
+      description: t("timer.stop.desc"),
+      duration: Infinity,
+      action: {
+        label: t("timer.stop.confirmar"),
+        onClick: () => {
+          const minutosRealizados = Math.ceil((tiempo_trabajo - tiempoSobra) / 60);
+          if (minutosRealizados > 0 && modo === "trabajo") {
+            guardarRegistro({
+              minutos: minutosRealizados,
+              minutosDescanso: 0,
+              completado: false,
+              nombreModo: configuracion.nombre,
+            });
+          }
+          setModo("trabajo");
+          setTiempoSobra(tiempo_trabajo);
+          setCiclos(0);
+          toast.error(t("timer.stop.exito"));
+          setSesionEnCurso(false);
+        },
+      },
+      cancel: {
+        label: t("timer.stop.cancelar"),
+        onClick: () => {
+          if (estabaCorriendo) setEstaActivo(true);
+          toast.dismiss();
+        },
+      },
+    });
   };
 
   return (
     <section className="flex flex-col justify-center items-center gap-[clamp(1rem,4vmin,2.5rem)] w-full h-full max-h-full overflow-hidden bg-transparent">
       <div className="flex flex-col items-center flex-shrink-0">
         <h2
-          className={`font-bold uppercase tracking-widest transition-colors duration-500 text-center text-[clamp(1.8rem,5vmin,4rem)]
-          ${modo === "trabajo" ? "text-[#EC4166]" : modo === "descanso_corto" ? "text-[#72c1d9]" : "text-[#6a81f2]"}`}
+          className={`font-bold uppercase tracking-widest transition-colors duration-500 text-center text-[clamp(1.8rem,5vmin,4rem)] ${modo === "trabajo" ? "text-[#EC4166]" : modo === "descanso_corto" ? "text-[#72c1d9]" : "text-[#6a81f2]"}`}
         >
           {t(`timer.modos.${modo}`)}
         </h2>
@@ -245,10 +280,7 @@ export default function Timer({ configuracion }: TimerProps) {
               <stop offset="100%" stopColor="#3347a0" />
             </linearGradient>
           </defs>
-
           <circle cx="200" cy="200" r={radio} fill="none" className="stroke-white/5" strokeWidth={strokeWidth} />
-
-          {/* Círculo de progreso */}
           <circle
             cx="200"
             cy="200"
@@ -276,8 +308,6 @@ export default function Timer({ configuracion }: TimerProps) {
             }}
           />
         </svg>
-
-        {/* Texto del tiempo - Max 7rem (antes 6rem) */}
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-custom-text font-extralight tracking-tighter text-[clamp(3.5rem,12vmin,7rem)]">
             {formatoTiempo(tiempoSobra)}
@@ -285,7 +315,6 @@ export default function Timer({ configuracion }: TimerProps) {
         </div>
       </div>
 
-      {/* 🔘 BOTONES FLUIDOS */}
       <div className="flex items-center gap-[clamp(1rem,4vmin,2.5rem)] flex-shrink-0 mt-2">
         <button
           onClick={botonReset}
@@ -293,7 +322,6 @@ export default function Timer({ configuracion }: TimerProps) {
         >
           <FaUndoAlt className="w-[clamp(1.2rem,3vmin,1.6rem)] h-[clamp(1.2rem,3vmin,1.6rem)]" />
         </button>
-
         <button
           onClick={botonPlayPausa}
           className="flex items-center justify-center rounded-full bg-custom-sidebar border border-white/10 hover:scale-110 transition-all shadow-2xl w-[clamp(4.5rem,13vmin,7rem)] h-[clamp(4.5rem,13vmin,7rem)]"
@@ -308,7 +336,6 @@ export default function Timer({ configuracion }: TimerProps) {
             />
           )}
         </button>
-
         <button
           onClick={botonStop}
           className="flex items-center justify-center rounded-full bg-custom-sidebar text-custom-text/40 shadow-lg hover:text-red-500 hover:scale-110 transition-all border border-white/5 w-[clamp(3rem,9vmin,4.5rem)] h-[clamp(3rem,9vmin,4.5rem)]"
